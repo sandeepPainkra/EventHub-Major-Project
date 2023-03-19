@@ -25,13 +25,13 @@ const Slider = ({ imageSrc, heading, para }) => {
           {para}
         </Text>
       </View>
-      <View className="w-full justify-center items-center">
+      <View className="w-full flex flex-row  justify-end items-center">
         <TouchableOpacity onPress={() => navigation.navigate("Slider2")}>
-          <View className="w-[50px] h-[50px]  text-center justify-center items-center border-2 border-gray-500 rounded-[100px] ">
+          <View className="w-[50px] h-[50px]  text-center justify-center items-center border-2 border-l-0 border-t-0 border-b-0 border-gray-700 rounded-[100px] ">
             <FontAwesome
               name="chevron-right"
               size={24}
-              color="grey"
+              color="darkgray"
               className=" font-thin"
             />
           </View>
