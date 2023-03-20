@@ -38,7 +38,10 @@ const Login = () => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity className="w-full bg-[#3D5CFF]  rounded-lg mt-8">
+        <TouchableOpacity
+          onPress={() => navigation.navigate("MobileVerification")}
+          className="w-full bg-[#3D5CFF]  rounded-lg mt-8"
+        >
           <Text className="text-white text-[20px] text-center py-4 ">
             Log In
           </Text>

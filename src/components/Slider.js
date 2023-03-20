@@ -8,9 +8,11 @@ const Slider = ({ imageSrc, heading, para }) => {
   return (
     <View className="h-[800px] px-6">
       <View className="w-full my-7 ">
-        <Text className="justify-center text-right  my-6 text-[17px] text-gray-400">
-          skip
-        </Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <Text className="justify-center text-right  my-6 text-[17px] text-gray-400">
+            skip
+          </Text>
+        </TouchableOpacity>
       </View>
       {/* Banner section  */}
 
