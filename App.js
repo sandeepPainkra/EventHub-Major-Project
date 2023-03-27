@@ -10,6 +10,8 @@ import Login from "./src/screens/Login.js";
 import Register from "./src/screens/Register.js";
 import MobileVerification from "./src/screens/MobileVerification.js";
 import MobileOtp from "./src/screens/MobileOtp.js";
+import Verified from "./src/screens/Verified.js";
+import Home from "./src/screens/Home.js";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -40,6 +42,8 @@ export default function App() {
             }}
           />
           <Stack.Screen name="MobileOtp" component={MobileOtp} />
+          <Stack.Screen name="Verified" component={Verified} />
+          <Stack.Screen name="Home" component={Home} />
         </Stack.Navigator>
       </NavigationContainer>
     </TailwindProvider>
