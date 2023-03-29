@@ -9,7 +9,7 @@ import {
 import React, { useLayoutEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import { phoneHeroImg } from "../../assets";
+import { phoneHeroImg } from "../assets/index.js";
 
 const MobileVerification = () => {
   const navigation = useNavigation();

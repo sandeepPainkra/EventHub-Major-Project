@@ -3,7 +3,7 @@ import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { slider2 } from "../../assets";
+import { slider2 } from "../assets/index.js";
 import { TouchableOpacity } from "react-native";
 
 const Slider2 = () => {

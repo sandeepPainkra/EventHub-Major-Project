@@ -28,7 +28,7 @@ const Verified = () => {
           Congratulations, you have completed your registration!
         </Text>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate("Parent")}
           className="bg-blue-500 w-[85%] rounded-lg"
         >
           <Text className="text-white text-center text-[23px] py-3 ">Done</Text>

@@ -3,15 +3,15 @@ import { Text, View } from "react-native";
 import { TailwindProvider } from "tailwindcss-react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LandingScreen from "./src/screens/LandingScreen.js";
-import Slider2 from "./src/screens/Slider2.js";
-import Slider3 from "./src/screens/Slider3.js";
-import Login from "./src/screens/Login.js";
-import Register from "./src/screens/Register.js";
-import MobileVerification from "./src/screens/MobileVerification.js";
-import MobileOtp from "./src/screens/MobileOtp.js";
-import Verified from "./src/screens/Verified.js";
-import Home from "./src/screens/Home.js";
+import LandingScreen from "./screens/LandingScreen.js";
+import Slider2 from "./screens/Slider2.js";
+import Slider3 from "./screens/Slider3.js";
+import Login from "./screens/Login.js";
+import Register from "./screens/Register.js";
+import MobileVerification from "./screens/MobileVerification.js";
+import MobileOtp from "./screens/MobileOtp.js";
+import Verified from "./screens/Verified.js";
+import Parent from "./screens/Parent.js";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -43,7 +43,11 @@ export default function App() {
           />
           <Stack.Screen name="MobileOtp" component={MobileOtp} />
           <Stack.Screen name="Verified" component={Verified} />
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            name="Parent"
+            component={Parent}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </TailwindProvider>

@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "react-native";
-import { slider3 } from "../../assets";
+import { slider3 } from "../assets/index.js";
 import { TouchableOpacity } from "react-native";
 
 const Slider3 = () => {
