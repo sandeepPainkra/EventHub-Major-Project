@@ -12,6 +12,7 @@ import MobileVerification from "./screens/MobileVerification.js";
 import MobileOtp from "./screens/MobileOtp.js";
 import Verified from "./screens/Verified.js";
 import Parent from "./screens/Parent.js";
+import Search from "./screens/tabs/Search.js";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -43,6 +44,11 @@ export default function App() {
           />
           <Stack.Screen name="MobileOtp" component={MobileOtp} />
           <Stack.Screen name="Verified" component={Verified} />
+          {/* <Stack.Screen
+            name="Search"
+            component={Search}
+            options={{ headerShown: true }}
+          /> */}
           <Stack.Screen
             name="Parent"
             component={Parent}

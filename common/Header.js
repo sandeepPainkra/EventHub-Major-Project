@@ -3,7 +3,7 @@ import React from "react";
 
 const Header = ({ leftIcon, rightIcon, onClickLeftIcon }) => {
   return (
-    <View className="bg-[#3D5CFF] flex-row justify-between items-center w-full h-[60px] px-[20px]">
+    <View className="bg-[#2F2F42] flex-row justify-between items-center w-full h-[60px] px-[20px]">
       <TouchableOpacity
         onPress={() => {
           onClickLeftIcon();

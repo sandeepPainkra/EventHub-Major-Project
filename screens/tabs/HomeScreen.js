@@ -20,9 +20,8 @@ const HomeScreen = () => {
     },
   ];
   return (
-    <View className="flex-1 h-full ">
+    <View className="flex-1 h-full bg-[#1F1F39] ">
       <Header
-        // leftIcon={require("../../assets/icons/menu.png")}
         leftIcon={require("../../assets/icons/menu.png")}
         rightIcon={require("../../assets/icons/user.png")}
         onClickLeftIcon={() => {
@@ -32,6 +31,7 @@ const HomeScreen = () => {
       <View className="flex-row h-[500px] justify-center items-center ">
         <Text>Home Screen</Text>
       </View>
+      {/* <BottomNavigator /> */}
     </View>
   );
 };

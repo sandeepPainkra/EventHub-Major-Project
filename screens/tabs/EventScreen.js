@@ -7,7 +7,7 @@ import { Entypo } from "@expo/vector-icons";
 const EventScreen = () => {
   const navigation = useNavigation();
   return (
-    <View>
+    <View className="flex-1 bg-[#1F1F39]">
       <Header
         leftIcon={require("../../assets/icons/menu.png")}
         rightIcon={require("../../assets/icons/user.png")}
@@ -74,7 +74,7 @@ const EventScreen = () => {
             </Text>
             <Image
               className="w-[100%] absolute h-full top-0 bottom-0 rounded-[20px]"
-              source={require("../../assets/technical.jpg")}
+              source={require("../../assets/alumni.jpg")}
             />
           </View>
         </View>
