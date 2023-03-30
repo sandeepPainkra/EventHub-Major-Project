@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const Faav = () => {
+const EventScreen = () => {
   return (
     <View>
-      <Text>Faav</Text>
+      <Text>EventScreen</Text>
     </View>
   );
 };
 
-export default Faav;
+export default EventScreen;

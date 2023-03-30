@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../common/Header";
 import Search from "../tabs/Search";
-import Faav from "../tabs/Faav";
+import EventScreen from "../tabs/EventScreen";
 import About from "../tabs/About";
 import Profile from "../tabs/Profile";
 import HomeScreen from "../tabs/HomeScreen";
@@ -27,7 +27,7 @@ const Home = ({ navigation }) => {
         ) : Selected == 1 ? (
           <Search />
         ) : Selected == 2 ? (
-          <Faav />
+          <EventScreen />
         ) : Selected == 3 ? (
           <About />
         ) : (
@@ -81,7 +81,11 @@ const Home = ({ navigation }) => {
           <Image
             className="w-[35px] h-[35px] "
             style={{ tintColor: "white" }}
-            source={require("../../assets/icons/home.png")}
+            source={
+              Selected == 2
+                ? require("../../assets/icons/event_fill.png")
+                : require("../../assets/icons/event.png")
+            }
           />
         </TouchableOpacity>
         <TouchableOpacity
