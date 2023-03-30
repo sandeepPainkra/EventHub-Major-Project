@@ -4,6 +4,8 @@ module.exports = {
     "./App.{js,jsx,ts,tsx}",
     "./screens/*.{js,ts,jsx,tsx}",
     "./screens/**/*.{js,ts,jsx,tsx}",
+    "./common/*.{js,ts,jsx,tsx}",
+    "./common/**/*.{js,ts,jsx,tsx}",
     // "./common/**/*.{js,ts,jsx,tsx}",
     // "./tabs/**/*.{js,ts,jsx,tsx}",
     // "./common/*.{js,ts,jsx,tsx}",

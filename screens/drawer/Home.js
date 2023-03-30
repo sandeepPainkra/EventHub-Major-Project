@@ -47,7 +47,7 @@ const Home = ({ navigation }) => {
         >
           <Image
             className="w-[35px] h-[35px] "
-            style={{ tintColor: "white" }}
+            style={{ tintColor: Selected == 0 ? "#3D5CFF" : "white" }}
             source={
               Selected == 0
                 ? require("../../assets/icons/home_fill.png")
@@ -65,7 +65,7 @@ const Home = ({ navigation }) => {
             className={
               !Selected == 1 ? "w-[32px] h-[32px]" : "w-[37px] h-[37px]"
             }
-            style={{ tintColor: "white" }}
+            style={{ tintColor: Selected == 1 ? "#3D5CFF" : "white" }}
             source={
               Selected == 1
                 ? require("../../assets/icons/search_fill.png")
@@ -80,7 +80,7 @@ const Home = ({ navigation }) => {
         >
           <Image
             className="w-[35px] h-[35px] "
-            style={{ tintColor: "white" }}
+            style={{ tintColor: Selected == 2 ? "#3D5CFF" : "white" }}
             source={
               Selected == 2
                 ? require("../../assets/icons/event_fill.png")
@@ -95,7 +95,7 @@ const Home = ({ navigation }) => {
         >
           <Image
             className="w-[35px] h-[35px] "
-            style={{ tintColor: "white" }}
+            style={{ tintColor: Selected == 3 ? "#3D5CFF" : "white" }}
             source={
               Selected == 3
                 ? require("../../assets/icons/bell_fill.png")
@@ -110,7 +110,7 @@ const Home = ({ navigation }) => {
         >
           <Image
             className="w-[35px] h-[35px] "
-            style={{ tintColor: "white" }}
+            style={{ tintColor: Selected == 4 ? "#3D5CFF" : "white" }}
             source={
               Selected == 4
                 ? require("../../assets/icons/account_fill.png")
