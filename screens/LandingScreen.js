@@ -23,16 +23,6 @@ const LandingScreen = () => {
           heading="  Find Event & Schedule Planning"
           para="Where passion meets creativity, events come to life"
         />
-        {/* <Slider
-          imageSrc={slider1}
-          heading="  Find Event & Schedule Planning"
-          para="Where passion meets creativity, events come to life"
-        />
-        <Slider
-          imageSrc={slider1}
-          heading="  Find Event & Schedule Planning"
-          para="Where passion meets creativity, events come to life"
-        /> */}
       </ScrollView>
     </SafeAreaView>
   );
