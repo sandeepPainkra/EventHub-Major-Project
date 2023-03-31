@@ -15,7 +15,16 @@ const MobileVerification = () => {
   const navigation = useNavigation();
 
   return (
-    <View className="flex-1 bg-[#1F1F39]">
+    <View className="flex-1 bg-[#1F1F39] relative">
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("Verified");
+        }}
+      >
+        <Text className="text-right mr-10 text-gray-500 text-[20px]">
+          Skip..
+        </Text>
+      </TouchableOpacity>
       <View className="w-full  p-3  justify-center items-center  ">
         <Image className="w-[130px] h-[130px] mt-3  " source={phoneHeroImg} />
       </View>

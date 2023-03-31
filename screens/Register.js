@@ -16,7 +16,7 @@ const Register = () => {
   return (
     <SafeAreaView className="flex-1 bg-[#1F1F39]">
       <View className="pt-6 pb-3 mt-0 px-5">
-        <Text className="text-white text-[40px] font-bold">Sign Up</Text>
+        <Text className="text-white text-[40px] font-light">Sign Up</Text>
         <Text className="text-white mt-0">
           Enter your details below & free sign up
         </Text>
@@ -55,7 +55,12 @@ const Register = () => {
             secureTextEntry={true}
           />
         </View>
-        <TouchableOpacity className="w-full bg-[#3D5CFF]  rounded-lg mt-8">
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Login");
+          }}
+          className="w-full bg-[#3D5CFF]  rounded-lg mt-8"
+        >
           <Text className="text-white text-[20px] text-center py-4 ">
             Create Account
           </Text>
@@ -68,10 +73,14 @@ const Register = () => {
         </View> */}
         <View className="w-full flex flex-row justify-center items-center mt-7 ">
           <Text className="text-[16px] text-gray-400">
-            Don't have an account?
+            Allredy have an account?
           </Text>
-          <TouchableOpacity>
-            <Text className="text-blue-600">Sign Up</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Login");
+            }}
+          >
+            <Text className="text-blue-600">Login</Text>
           </TouchableOpacity>
         </View>
       </View>

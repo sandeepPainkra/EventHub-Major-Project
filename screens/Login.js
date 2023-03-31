@@ -14,7 +14,7 @@ const Login = () => {
   return (
     <SafeAreaView className="flex-1 bg-[#1F1F39]">
       <View className="pt-6 pb-3 mt-9 px-5">
-        <Text className="text-white text-[40px] font-bold">Log In</Text>
+        <Text className="text-white text-[40px] font-lighter">Log In</Text>
       </View>
       <View className="w-full h-[85%] bg-[#2F2F42] px-6 py-8 rounded-t-[20px]  ">
         <View>
@@ -51,7 +51,11 @@ const Login = () => {
           <Text className="text-[16px] text-gray-400">
             Don't have an account?
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Register");
+            }}
+          >
             <Text className="text-blue-600">Sign Up</Text>
           </TouchableOpacity>
         </View>

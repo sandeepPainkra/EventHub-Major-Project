@@ -15,7 +15,6 @@ import Parent from "./screens/Parent.js";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
-
   return (
     <TailwindProvider>
       <NavigationContainer>
