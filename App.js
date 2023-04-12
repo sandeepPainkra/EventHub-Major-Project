@@ -12,6 +12,7 @@ import MobileVerification from "./screens/MobileVerification.js";
 import MobileOtp from "./screens/MobileOtp.js";
 import Verified from "./screens/Verified.js";
 import Parent from "./screens/Parent.js";
+import AllEventCatogaries from "./screens/Extra-screens/AllEventCatogaries.js";
 
 export default function App() {
   const Stack = createNativeStackNavigator();

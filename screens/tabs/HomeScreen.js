@@ -28,6 +28,8 @@ const HomeScreen = () => {
           navigation.openDrawer();
         }}
       />
+      {/* banner starts here */}
+
       <View className="flex-row h-[500px] justify-center items-center ">
         <Text>Home Screen</Text>
       </View>

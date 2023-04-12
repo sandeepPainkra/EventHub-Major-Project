@@ -6,6 +6,7 @@ import Search from "../tabs/Search";
 import EventScreen from "../tabs/EventScreen";
 import Profile from "../tabs/Profile";
 import Notification from "../tabs/Notification";
+import AllEventCatogaries from "../Extra-screens/AllEventCatogaries";
 
 const Bottom = createBottomTabNavigator();
 const BottomNavigator = () => {
