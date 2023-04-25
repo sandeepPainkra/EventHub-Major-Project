@@ -146,7 +146,7 @@ const EventScreen = () => {
         <View className="w-full flex-row justify-center py-14 px-6">
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("AllEventsCatogary");
+              navigation.navigate("AllEventCategories");
             }}
             className="bg-[#3D5CFF] w-[50%] py-2 flex-row justify-center  items-center  rounded-md  "
           >

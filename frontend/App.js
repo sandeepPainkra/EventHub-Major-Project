@@ -13,6 +13,7 @@ import MobileOtp from "./screens/MobileOtp.js";
 import Verified from "./screens/Verified.js";
 import Parent from "./screens/Parent.js";
 import AllEventCatogaries from "./screens/Extra-screens/AllEventCatogaries.js";
+import AllEventCategories from "./screens/AllEventCategories.js";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -48,6 +49,11 @@ export default function App() {
             name="Parent"
             component={Parent}
             options={{ headerShown: false }}
+          />
+
+          <Stack.Screen
+            name="AllEventCategories"
+            component={AllEventCategories}
           />
         </Stack.Navigator>
       </NavigationContainer>
