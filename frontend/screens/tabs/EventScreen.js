@@ -5,19 +5,33 @@ import {
   Image,
   TouchableOpacity,
   Modal,
-  Alert,
-  Pressable,
-  Button,
   TextInput,
 } from "react-native";
 import React, { useState } from "react";
 import Header from "../../common/Header";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 const EventScreen = () => {
   const navigation = useNavigation();
+  const [pic, setPic] = useState();
   const [modalVisible, setModalVisible] = useState(false);
+
+  const SelectImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (result) {
+      setPic(result.assets[0].uri);
+    }
+  };
+  console.log(pic);
   return (
     <View className="flex-1 bg-[#1F1F39]">
       <Header
@@ -61,8 +75,26 @@ const EventScreen = () => {
                       Create A Event Category
                     </Text>
                     <View>
+                      <Image
+                        className="w-[300px] h-[150px] rounded-lg mt-7 mb-5"
+                        source={{
+                          uri: !pic
+                            ? "https://plus.unsplash.com/premium_photo-1664053453717-6fbe70ea92ed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60"
+                            : pic,
+                        }}
+                      />
+                      <TouchableOpacity
+                        onPress={() => {
+                          SelectImage();
+                        }}
+                        className="bg-blue-400 flex justify-center items-center py-3 rounded-md"
+                      >
+                        <Text className="text-[20px] font-semibold text-white tracking-[2px]">
+                          Sellect Image
+                        </Text>
+                      </TouchableOpacity>
                       <TextInput
-                        className="text-[19px] px-3 py-2 placeholder-gray-500 text-gray-800 bg-[#d3d3da] rounded-[10px] mt-11  "
+                        className="text-[19px] px-3 py-3 placeholder-gray-500 text-gray-800 bg-[#d3d3da] rounded-[10px] mt-2  "
                         placeholder="Title of Event Category"
                       />
                     </View>
@@ -74,6 +106,7 @@ const EventScreen = () => {
                     <TouchableOpacity
                       onPress={() => {
                         setModalVisible(!modalVisible);
+                        setPic();
                       }}
                       className="w-[45%] bg-[#ed4b40] py-2 flex justify-center rounded-lg items-center"
                     >
