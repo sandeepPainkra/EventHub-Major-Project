@@ -13,9 +13,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  cpassword: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    default: "demo image",
+  },
   phone: {
     type: String,
-    default: "",
+    default: 123456789,
   },
   admin: {
     type: Boolean,
