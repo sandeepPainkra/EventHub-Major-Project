@@ -12,10 +12,13 @@ import Header from "../../common/Header";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { storage } from "../../firebase.config";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const EventScreen = () => {
   const navigation = useNavigation();
   const [pic, setPic] = useState();
+  const [url, setUrl] = useState();
   const [modalVisible, setModalVisible] = useState(false);
 
   const SelectImage = async () => {
@@ -27,11 +30,42 @@ const EventScreen = () => {
       quality: 1,
     });
 
-    if (result) {
-      setPic(result.assets[0].uri);
+    if (!result.canceled) {
+      const uploadUrl = await uploadImageAsync(result.assets[0].uri);
+      setPic(uploadUrl);
     }
   };
   console.log(pic);
+
+  // upload image to firebase storage
+  const uploadImageAsync = async (uri) => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+
+    try {
+      const storageRef = ref(
+        storage,
+        `Images/Event-Category/image-${Date.now()}`
+      );
+      const result = await uploadBytes(storageRef, blob);
+      blob.close();
+      return await getDownloadURL(storageRef);
+    } catch (error) {
+      alert(`Error : ${error}`);
+    }
+  };
+
   return (
     <View className="flex-1 bg-[#1F1F39]">
       <Header
@@ -100,7 +134,12 @@ const EventScreen = () => {
                     </View>
                   </View>
                   <View className="w-[70%] mt-6 flex-row justify-between items-center">
-                    <TouchableOpacity className="w-[45%] bg-blue-400 py-2 flex justify-center rounded-lg items-center">
+                    <TouchableOpacity
+                      onPress={() => {
+                        HandelUpload();
+                      }}
+                      className="w-[45%] bg-blue-400 py-2 flex justify-center rounded-lg items-center"
+                    >
                       <Text className="text-[22px] text-white ">Create</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
