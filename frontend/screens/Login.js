@@ -1,9 +1,12 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import React, { useLayoutEffect } from "react";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
@@ -11,6 +14,32 @@ const Login = () => {
       headerShown: false,
     });
   }, []);
+
+  const LoginAccount = async () => {
+    fetch("http://10.0.2.2:5000/api/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          console.log(data);
+
+          const jsonValue = JSON.stringify(data.token);
+          AsyncStorage.setItem("token", jsonValue);
+          Alert.alert(data.message);
+        } else {
+          Alert.alert(data.message);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <SafeAreaView className="flex-1 bg-[#1F1F39]">
       <View className="pt-6 pb-3 mt-9 px-5">
@@ -20,6 +49,8 @@ const Login = () => {
         <View>
           <Text className="text-[18px] text-gray-500 ">Your Email</Text>
           <TextInput
+            onChangeText={(text) => setEmail(text)}
+            value={email}
             placeholder="Enter your email id"
             className="  text-[19px] px-4 py-3 placeholder-gray-500 text-white bg-[#3E3E55] rounded-[10px]  "
           />
@@ -27,6 +58,8 @@ const Login = () => {
         <View className="mt-10">
           <Text className="text-[18px] text-gray-500 ">Password</Text>
           <TextInput
+            onChangeText={(text) => setPassword(text)}
+            value={password}
             placeholder="Password"
             className="  text-[19px] px-4 py-3 text-white bg-[#3E3E55] rounded-[10px]   placeholder-white "
             secureTextEntry={true}
@@ -39,7 +72,10 @@ const Login = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("MobileVerification")}
+          onPress={() => {
+            // navigation.navigate("MobileVerification")
+            LoginAccount();
+          }}
           className="w-full bg-[#3D5CFF]  rounded-lg mt-8"
         >
           <Text className="text-white text-[20px] text-center py-4 ">

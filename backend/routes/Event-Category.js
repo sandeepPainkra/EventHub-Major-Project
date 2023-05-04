@@ -27,5 +27,12 @@ EventCategoryRouter.post("/add", (req, res) => {
     console.log(error);
   }
 });
+EventCategoryRouter.get("/all", (req, res) => {
+  EventCategoryModel.find()
+    .then((eventCategory) => {
+      res.json({ status: "ok", eventCategory: eventCategory });
+    })
+    .catch((err) => console.log(err));
+});
 
 module.exports = EventCategoryRouter;

@@ -14,25 +14,74 @@ import Verified from "./screens/Verified.js";
 import Parent from "./screens/Parent.js";
 import AllEventCatogaries from "./screens/Extra-screens/AllEventCatogaries.js";
 import AllEventCategories from "./screens/AllEventCategories.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
+import EventCategory from "./screens/Extra-screens/EventCategory.js";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
+  const [isLoading, setIsLoading] = useState(null);
+  const [Token, setToken] = useState(null);
+
+  useEffect(() => {
+    AsyncStorage.getItem("token").then((value) => {
+      if (value !== null) {
+        setIsLoading(true);
+        setToken(value);
+        console.log(value);
+      } else {
+        setIsLoading(false);
+      }
+    });
+  }, []);
   return (
     <TailwindProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Landing Screen" component={LandingScreen} />
-          <Stack.Screen name="Slider2" component={Slider2} />
-          <Stack.Screen name="Slider3" component={Slider3} />
-          <Stack.Screen name="Login" component={Login} />
+          {isLoading == null ? (
+            <Stack.Screen name="Landing Screen" component={LandingScreen} />
+          ) : isLoading === true ? (
+            <Stack.Screen
+              name="MobileVerification"
+              component={MobileVerification}
+              options={{
+                headerTitle: "Continue With Phone",
+                headerStyle: {
+                  backgroundColor: "#1F1F39",
+                },
+                headerTintColor: "white",
+                headerTitleAlign: "center",
+                headerTitleStyle: {
+                  fontSize: 24,
+                  fontWeight: "100",
+                },
+              }}
+            />
+          ) : (
+            <>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Slider2" component={Slider2} />
+              <Stack.Screen name="Slider3" component={Slider3} />
+            </>
+          )}
           <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="MobileOtp" component={MobileOtp} />
+          <Stack.Screen name="Verified" component={Verified} />
           <Stack.Screen
-            name="MobileVerification"
-            component={MobileVerification}
+            name="Parent"
+            component={Parent}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="AllEventCategories"
+            component={AllEventCategories}
+          />
+          <Stack.Screen
+            name="EventCategory"
             options={{
-              headerTitle: "Continue With Phone",
+              headerTitle: "Event Category",
               headerStyle: {
-                backgroundColor: "#1F1F39",
+                backgroundColor: "#2F2F42",
               },
               headerTintColor: "white",
               headerTitleAlign: "center",
@@ -41,19 +90,7 @@ export default function App() {
                 fontWeight: "100",
               },
             }}
-          />
-          <Stack.Screen name="MobileOtp" component={MobileOtp} />
-          <Stack.Screen name="Verified" component={Verified} />
-
-          <Stack.Screen
-            name="Parent"
-            component={Parent}
-            options={{ headerShown: false }}
-          />
-
-          <Stack.Screen
-            name="AllEventCategories"
-            component={AllEventCategories}
+            component={EventCategory}
           />
         </Stack.Navigator>
       </NavigationContainer>

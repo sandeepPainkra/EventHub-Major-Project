@@ -6,8 +6,9 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../common/Header";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
@@ -16,9 +17,10 @@ import { storage } from "../../firebase.config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const EventScreen = () => {
+  const [EventCategoriesData, setEventCategoriesData] = useState([]);
+  const [title, setTitle] = useState("");
   const navigation = useNavigation();
-  const [pic, setPic] = useState();
-  const [url, setUrl] = useState();
+  const [pic, setPic] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   const SelectImage = async () => {
@@ -35,7 +37,7 @@ const EventScreen = () => {
       setPic(uploadUrl);
     }
   };
-  console.log(pic);
+  // console.log(pic);
 
   // upload image to firebase storage
   const uploadImageAsync = async (uri) => {
@@ -66,6 +68,48 @@ const EventScreen = () => {
     }
   };
 
+  const HandelUpload = () => {
+    fetch("http://10.0.2.2:5000/api/post/v1/eventcategory/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        image: pic,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.status === "ok") {
+          setModalVisible(!modalVisible);
+          setTitle("");
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
+  };
+
+  // fetch data
+  useEffect(() => {
+    fetch("http://10.0.2.2:5000/api/post/v1/eventcategory/all", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(),
+    })
+      .then((res) => {
+        res.json().then((data) => {
+          setEventCategoriesData(data?.eventCategory);
+        });
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
+  }, []);
+  console.log(EventCategoriesData);
   return (
     <View className="flex-1 bg-[#1F1F39]">
       <Header
@@ -128,6 +172,8 @@ const EventScreen = () => {
                         </Text>
                       </TouchableOpacity>
                       <TextInput
+                        onChangeText={(text) => setTitle(text)}
+                        value={title}
                         className="text-[19px] px-3 py-3 placeholder-gray-500 text-gray-800 bg-[#d3d3da] rounded-[10px] mt-2  "
                         placeholder="Title of Event Category"
                       />
@@ -213,6 +259,28 @@ const EventScreen = () => {
               source={require("../../assets/alumni.jpg")}
             />
           </TouchableOpacity>
+
+          {EventCategoriesData.map((item, index) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("EventCategory", {
+                    item: item,
+                  });
+                }}
+                key={index}
+                className="relative w-[45%] h-[100px] justify-center item-center mt-8 rounded-[20px]"
+              >
+                <Text className="text-center z-20 text-[20px] tracking-[2px] text-white">
+                  {item.title}
+                </Text>
+                <Image
+                  className="w-[100%] absolute h-full top-0 bottom-0 rounded-[20px]"
+                  source={{ uri: item.image }}
+                />
+              </TouchableOpacity>
+            );
+          })}
         </View>
 
         <View className="w-full flex-row justify-center py-14 px-6">
