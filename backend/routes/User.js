@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../model/User");
 const Bycript = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const LoginRequired = require("../middleware/LoginRequired");
 
 const router = express.Router();
 router.get("/", (req, res) => {
@@ -57,18 +58,46 @@ router.post("/login", (req, res) => {
         .then((user) => {
           if (user) {
             Bycript.compare(password, user.password)
-              .then((isMatch) => {
+              .then(async (isMatch) => {
                 if (isMatch) {
                   const token = jwt.sign(
                     { _id: user._id },
-                    "jdhjdbndbhgduey,lklj"
+                    "jdhjdbndbhgduey,lklj",
+                    {
+                      expiresIn: "1h",
+                    }
                   );
+                  let OldTokens = user.tokens || [];
+                  if (OldTokens.length) {
+                    OldTokens = OldTokens.filter((t) => {
+                      const timeDeff =
+                        (Date.now() - parseInt(t.signedAt)) / 1000;
+                      if (timeDeff < 3600) {
+                        return t;
+                      }
+                    });
+                  }
+                  try {
+                    await User.findByIdAndUpdate(user._id, {
+                      tokens: [
+                        ...OldTokens,
+                        { token, signedAt: Date.now().toString() },
+                      ],
+                    });
+                  } catch (error) {
+                    console.log("Token update error: ", error);
+                  }
+
                   const { _id, name, email } = user;
                   res.json({
                     status: "ok",
                     message: "Login Successfull :)",
-                    token: token,
-                    user: { _id, name, email },
+                    user: {
+                      _id,
+                      name,
+                      email,
+                      token: user.tokens[user.tokens.length - 1].token,
+                    },
                   });
                 } else {
                   res.status(422).json({
@@ -88,6 +117,31 @@ router.post("/login", (req, res) => {
     }
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.post("/logout", LoginRequired, async (req, res) => {
+  try {
+    const token = req.headers.authorization.replace("Bearer ", "");
+    if (!token) {
+      return res.status(401).json({ error: "You must be logged in !!" });
+    } else {
+      const tokens = req.user.tokens;
+      // console.log("Token from header : ", token);
+      // console.log("first tokens: ", tokens);
+      const newTokens = tokens.filter((t) => t.token !== token);
+      // console.log("new tokens: ", newTokens);
+      try {
+        await User.findByIdAndUpdate(req.user._id, {
+          $set: { tokens: newTokens },
+        });
+        return res.json({ status: "ok", message: "Logout Successfull :)" });
+      } catch (error) {
+        console.log("Error in logout: ", error);
+      }
+    }
+  } catch (error) {
+    console.log("error in logout: ", error);
   }
 });
 

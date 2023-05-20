@@ -31,14 +31,16 @@ const Login = () => {
         if (data.status === "ok") {
           console.log(data);
 
-          const jsonValue = JSON.stringify(data.token);
-          AsyncStorage.setItem("token", jsonValue);
+          const token = data.user.token;
+          console.log("JsonValue Token is :", token);
+          AsyncStorage.setItem("token", token);
           Alert.alert(data.message);
+          navigation.navigate("Parent");
         } else {
           Alert.alert(data.message);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("Error is :", err));
   };
   return (
     <SafeAreaView className="flex-1 bg-[#1F1F39]">
@@ -73,7 +75,7 @@ const Login = () => {
 
         <TouchableOpacity
           onPress={() => {
-            // navigation.navigate("MobileVerification")
+            // navigation.navigate("MobileVerification");
             LoginAccount();
           }}
           className="w-full bg-[#3D5CFF]  rounded-lg mt-8"
