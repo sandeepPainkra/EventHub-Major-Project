@@ -124,6 +124,7 @@ router.post("/logout", LoginRequired, async (req, res) => {
   try {
     const token = req.headers.authorization.replace("Bearer ", "");
     if (!token) {
+      console.log("backend token: ", token);
       return res.status(401).json({ error: "You must be logged in !!" });
     } else {
       const tokens = req.user.tokens;

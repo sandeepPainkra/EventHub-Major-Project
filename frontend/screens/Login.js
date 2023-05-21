@@ -30,7 +30,8 @@ const Login = () => {
       .then((data) => {
         if (data.status === "ok") {
           console.log(data);
-
+          setEmail("");
+          setPassword("");
           const token = data.user.token;
           console.log("JsonValue Token is :", token);
           AsyncStorage.setItem("token", token);

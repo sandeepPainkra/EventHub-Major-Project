@@ -21,16 +21,7 @@ import EventCategory from "./screens/Extra-screens/EventCategory.js";
 export default function App() {
   const Stack = createNativeStackNavigator();
   const [token, setToken] = useState(null);
-  // const [Token, setToken] = useState(null);
 
-  // useEffect(() => {
-  //   AsyncStorage.getItem("token").then((value) => {
-  //     if (value !== null) {
-  //       setToken(value);
-  //       console.log("Token is :", value);
-  //     }
-  //   });
-  // }, []);
   useEffect(() => {
     AsyncStorage.getItem("token").then((value) => {
       if (!value) {
