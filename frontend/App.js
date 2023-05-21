@@ -17,6 +17,7 @@ import AllEventCategories from "./screens/AllEventCategories.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import EventCategory from "./screens/Extra-screens/EventCategory.js";
+import ParticipatedEvents from "./screens/Extra-screens/ParticipatedEvents.js";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -105,6 +106,22 @@ export default function App() {
               },
             }}
             component={EventCategory}
+          />
+          <Stack.Screen
+            name="Participated Events"
+            component={ParticipatedEvents}
+            options={{
+              headerTitle: "All Participated Events",
+              headerStyle: {
+                backgroundColor: "#1F1F39",
+              },
+              headerTintColor: "white",
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontSize: 24,
+                fontWeight: "100",
+              },
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -3,8 +3,8 @@ import React from "react";
 
 const AllEventCatogaries = () => {
   return (
-    <View>
-      <Text>AllEventCatogaries</Text>
+    <View className="flex-1 bg-gray-700">
+      <Text className="text-red-600">AllEventCatogaries</Text>
     </View>
   );
 };

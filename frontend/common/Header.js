@@ -27,7 +27,6 @@ const Header = ({ leftIcon, rightIcon, onClickLeftIcon }) => {
   }, []);
   const LogOut = async () => {
     await AsyncStorage.removeItem("token");
-    navigation.navigate("Login");
     await fetch("http://10.0.2.2:5000/api/user/logout", {
       method: "POST",
       headers: {
@@ -37,11 +36,13 @@ const Header = ({ leftIcon, rightIcon, onClickLeftIcon }) => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data.status == "ok") {
           AsyncStorage.removeItem("token");
           Alert.alert(data.message);
+          navigation.navigate("Landing Screen");
         } else {
-          console.log("Error");
+          Alert.alert(data.error);
         }
       })
       .catch((error) => console.log("Logout Error: ", error));
