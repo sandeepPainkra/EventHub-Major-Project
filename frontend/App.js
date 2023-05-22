@@ -18,20 +18,46 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import EventCategory from "./screens/Extra-screens/EventCategory.js";
 import ParticipatedEvents from "./screens/Extra-screens/ParticipatedEvents.js";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import store from "./redux/store.js";
+import { getUserProfile } from "./redux/actions.js";
 
-export default function App() {
+// root Component here
+const RootComponent = () => {
   const Stack = createNativeStackNavigator();
   const [token, setToken] = useState(null);
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.userReducer);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (userData.token) {
+        await AsyncStorage.setItem("token", userData.token);
+        setToken(userData.token);
+      }
+    };
+    fetchData();
+  }, [userData]);
 
   useEffect(() => {
     AsyncStorage.getItem("token").then((value) => {
       if (!value) {
         console.log("Token doesn't exist");
       } else {
-        console.log("Token is :", value);
         setToken(value);
       }
     });
+    const fetchUser = async () => {
+      await AsyncStorage.getItem("user", (err, result) => {
+        if (result) {
+          console.log("User from asyncStorage :", result);
+          dispatch(getUserProfile(JSON.parse(result)));
+        } else {
+          console.log("User doesn't exist");
+        }
+      });
+    };
+    fetchUser();
   }, []);
   return (
     <TailwindProvider>
@@ -126,5 +152,13 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </TailwindProvider>
+  );
+};
+
+export default function App() {
+  return (
+    <Provider store={store}>
+      <RootComponent />
+    </Provider>
   );
 }

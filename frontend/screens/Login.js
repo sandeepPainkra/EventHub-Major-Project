@@ -3,11 +3,14 @@ import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { getUserProfile } from "../redux/actions";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -32,9 +35,12 @@ const Login = () => {
           console.log(data);
           setEmail("");
           setPassword("");
+          dispatch(getUserProfile(data.user));
           const token = data.user.token;
-          console.log("JsonValue Token is :", token);
+          const user = JSON.stringify(data.user);
+          // console.log("JsonValue Token is :", token);
           AsyncStorage.setItem("token", token);
+          AsyncStorage.setItem("user", user);
           Alert.alert(data.message);
           navigation.navigate("Parent");
         } else {
