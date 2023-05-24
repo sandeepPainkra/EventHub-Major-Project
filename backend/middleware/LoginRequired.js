@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
 
   jwt.verify(token, "jdhjdbndbhgduey,lklj", (err, payload) => {
     if (err) {
-      return res.status(401).json({ error: "You must be logged in !!" });
+      return res.status(401).json({ error: "You must be logged in 2!!" });
     }
 
     const { _id } = payload;

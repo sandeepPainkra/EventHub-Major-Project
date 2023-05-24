@@ -21,6 +21,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "demo image",
   },
+  bio: {
+    type: String,
+  },
   phone: {
     type: String,
     default: 123456789,

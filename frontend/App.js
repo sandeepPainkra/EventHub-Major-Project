@@ -45,6 +45,7 @@ const RootComponent = () => {
         console.log("Token doesn't exist");
       } else {
         setToken(value);
+        console.log("Token does exist", value);
       }
     });
     const fetchUser = async () => {

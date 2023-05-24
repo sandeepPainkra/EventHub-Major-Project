@@ -146,4 +146,28 @@ router.post("/logout", LoginRequired, async (req, res) => {
   }
 });
 
+router.put("/update-profile", LoginRequired, async (req, res) => {
+  const { name, bio, image } = req.body;
+  try {
+    if (!name || !bio) {
+      res
+        .status(422)
+        .json({ status: "error", message: "Please fill all the field!!" });
+    } else {
+      const user = await User.findByIdAndUpdate(
+        req.user._id,
+        { name, bio, image },
+        { new: true }
+      );
+      res.json({
+        status: "ok",
+        message: "Profile Updated Successfull :)",
+        user: user,
+      });
+    }
+  } catch (error) {
+    console.log("Error in update profile: ", error);
+  }
+});
+
 module.exports = router;
