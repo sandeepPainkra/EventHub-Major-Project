@@ -84,6 +84,7 @@ const EventScreen = () => {
         if (data?.status === "ok") {
           setModalVisible(!modalVisible);
           setTitle("");
+          Alert.alert(data.message);
         }
       })
       .catch((err) => {
@@ -102,16 +103,16 @@ const EventScreen = () => {
     })
       .then((res) => {
         res.json().then((data) => {
-          setEventCategoriesData(data?.eventCategory);
+          setEventCategoriesData(data.eventCategory);
         });
       })
       .catch((err) => {
         console.log("Error", err);
       });
   }, []);
-  console.log(EventCategoriesData);
+  console.log("All Event Categories data is :", EventCategoriesData);
   return (
-    <View className="flex-1 bg-[#1F1F39]">
+    <View className="flex-1 bg-[#1F1F39] pb-10">
       <Header
         leftIcon={require("../../assets/icons/menu.png")}
         rightIcon={require("../../assets/icons/user.png")}

@@ -1,7 +1,7 @@
 import { SafeAreaView } from "react-native";
 import { Text, View } from "react-native";
 import { TailwindProvider } from "tailwindcss-react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LandingScreen from "./screens/LandingScreen.js";
 import Slider2 from "./screens/Slider2.js";
@@ -34,6 +34,8 @@ const RootComponent = () => {
       if (userData.token) {
         await AsyncStorage.setItem("token", userData.token);
         setToken(userData.token);
+      } else {
+        console.log("token does not exist!!");
       }
     };
     fetchData();

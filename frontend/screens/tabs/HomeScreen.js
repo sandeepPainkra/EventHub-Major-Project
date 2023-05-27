@@ -28,6 +28,7 @@ const WIDTH = Dimensions.get("window").width - 20;
 const HomeScreen = () => {
   const navigation = useNavigation();
   const renderItem = ({ item, index }) => <BannerSlider src={item.image} />;
+
   return (
     <View className="flex-1 h-full bg-[#1F1F39] ">
       <Header

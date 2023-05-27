@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
-import { userReducer } from "./reducer";
+import { userReducer, getAveshCategoryReducer } from "./reducer";
 
 export default combineReducers({
   userReducer,
+  getAveshCategoryReducer,
 });

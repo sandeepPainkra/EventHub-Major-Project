@@ -22,7 +22,8 @@ const Profile = () => {
   const [profilePic, setProfilePic] = useState(null);
   const [name, setName] = useState();
   const [bio, setBio] = useState();
-  const [updatedData, setUpdatedData] = useState({});
+  const [userId, setUserId] = useState();
+  const [user, setUser] = useState();
 
   useEffect(() => {
     AsyncStorage.getItem("token").then((value) => {
@@ -31,9 +32,28 @@ const Profile = () => {
       } else {
         // console.log("Token in header :", value);
         setToken(value);
+
+        if (value === user?.token[0]) {
+          console.log("Token is same");
+        } else if (value == null) {
+          console.log("Token is null");
+        } else {
+          AsyncStorage.removeItem("token");
+          AsyncStorage.removeItem("user");
+        }
+      }
+    });
+    AsyncStorage.getItem("user").then((value) => {
+      if (!value) {
+        console.log("User doesn't exist");
+      } else {
+        // console.log("User in header :", value);
+        setUserId(JSON.parse(value)._id);
       }
     });
   }, []);
+  // console.log("userId is:", userId);
+
   const LogOut = async () => {
     await AsyncStorage.removeItem("token");
     await fetch("http://10.0.2.2:5000/api/user/logout", {
@@ -116,14 +136,10 @@ const Profile = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("Update Profile Data from frontend : ", data);
+        // console.log("Update Profile Data from frontend : ", data);
         if (data.status == "ok") {
           Alert.alert(data.message);
-          setUpdatedData({
-            name: data.user.name,
-            bio: data.user.bio,
-            image: data.user.image,
-          });
+
           setModalVisible(false);
         } else {
           Alert.alert(data.error);
@@ -133,6 +149,27 @@ const Profile = () => {
         console.log("Update Profile Error from frontend : ", error)
       );
   };
+
+  // Getting user data for profile by id
+  useEffect(() => {
+    fetch(`http://10.0.2.2:5000/api/user/getuser/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(),
+    })
+      .then((res) => {
+        res.json().then((data) => {
+          // console.log("User Data from frontend : ", data);
+          setUser(data.user);
+        });
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
+  }, [userId]);
+
   return (
     <View className="flex-1 bg-[#1F1F39]">
       {/* Profile header  */}
@@ -146,9 +183,9 @@ const Profile = () => {
             <Image
               // style={{ tintColor: "" }}
               source={
-                !updatedData.image
+                !user?.image
                   ? require("../../assets/icons/user.png")
-                  : { uri: updatedData.image }
+                  : { uri: user?.image }
               }
               className="w-[150px] h-[150px] rounded-[75px]]"
             />
@@ -165,11 +202,9 @@ const Profile = () => {
         </View>
         {/* bio section starts here */}
         <View className="w-[full ] justify-center items-center">
-          <Text className="text-white text-[27px]">{updatedData.name}</Text>
-          <Text className="text-white text-[19px] my-2">
-            samdeeppainkra@gmail.com
-          </Text>
-          <Text className="text-white text-[15px]">{updatedData.bio}</Text>
+          <Text className="text-white text-[27px]">{user?.name}</Text>
+          <Text className="text-white text-[19px] my-2">{user?.email}</Text>
+          <Text className="text-white text-[15px]">{user?.bio}</Text>
           <TouchableOpacity
             onPress={() => {
               setModalVisible(!modalVisible);

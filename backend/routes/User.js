@@ -64,7 +64,8 @@ router.post("/login", (req, res) => {
                     { _id: user._id },
                     "jdhjdbndbhgduey,lklj",
                     {
-                      expiresIn: "1h",
+                      // expiresIn: "1h",
+                      expiresIn: "1d",
                     }
                   );
                   let OldTokens = user.tokens || [];
@@ -88,7 +89,7 @@ router.post("/login", (req, res) => {
                     console.log("Token update error: ", error);
                   }
 
-                  const { _id, name, email } = user;
+                  const { _id, name, email, image } = user;
                   res.json({
                     status: "ok",
                     message: "Login Successfull :)",
@@ -96,6 +97,7 @@ router.post("/login", (req, res) => {
                       _id,
                       name,
                       email,
+                      image,
                       token: user.tokens[user.tokens.length - 1].token,
                     },
                   });
@@ -170,4 +172,22 @@ router.put("/update-profile", LoginRequired, async (req, res) => {
   }
 });
 
+router.get("/getuser/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    await User.findById(id)
+      .then((user) => {
+        if (user) {
+          res.json({ status: "ok", message: "User found :)", user: user });
+        } else {
+          res
+            .status(422)
+            .json({ status: "error", message: "User not found :(" });
+        }
+      })
+      .catch((err) => console.log("error in getting user by id: ", err));
+  } catch (error) {
+    console.log("Error in getting user by id: ", error);
+  }
+});
 module.exports = router;
