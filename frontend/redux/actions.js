@@ -1,4 +1,4 @@
-import { GET_AVESH_CATEGORY, GET_USER_PROFILE } from "./constant";
+import { GET_AVESH_CATEGORY_ID, GET_USER_PROFILE } from "./constant";
 
 export function getUserProfile(item) {
   return {
@@ -6,9 +6,9 @@ export function getUserProfile(item) {
     data: item,
   };
 }
-export function getAveshCategory(item) {
+export function getAveshCategoryId(item) {
   return {
-    type: GET_AVESH_CATEGORY,
+    type: GET_AVESH_CATEGORY_ID,
     data: item,
   };
 }

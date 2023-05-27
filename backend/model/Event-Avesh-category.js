@@ -12,6 +12,11 @@ const EventAvesh = new mongoose.Schema({
   description: {
     type: String,
   },
+  AveshEvent: [
+    {
+      type: Object,
+    },
+  ],
 });
 
 const EventAveshCategoryModal = mongoose.model(

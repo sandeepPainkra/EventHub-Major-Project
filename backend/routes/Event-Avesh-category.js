@@ -2,44 +2,6 @@ const express = require("express");
 const EventAveshCategoryModal = require("../model/Event-Avesh-category");
 const EventAveshRouter = express.Router();
 
-// EventAveshRouter.post("/add", async (req, res) => {
-//   const { title, image, description } = req.body;
-
-//   try {
-//     if (!title || !image) {
-//       return res.status(422).json({ error: "Plase add all the fields" });
-//     } else {
-//       const eventAvesh = new EventAveshCategoryModal(
-//         {
-//           title,
-//           image,
-//           description,
-//         },
-//         {
-//           timestamps: true,
-//         }
-//       );
-//       // await eventAvesh.save();
-//       eventAvesh
-//         .save()
-//         .then((eventAvesh) => {
-//           res.json({
-//             status: "ok",
-//             message: "Event Avesh Added Successfull :)",
-//             eventAvesh: eventAvesh,
-//           });
-//         })
-//         .catch((err) => {
-//           console.log("Error in adding Event Avesh in backend is: ", err);
-//         });
-//     }
-
-//     // res.status(201).json({ message: "Event Avesh added successfully" });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
-
 EventAveshRouter.post("/add", (req, res) => {
   const { title, image, description } = req.body;
   try {
@@ -72,6 +34,54 @@ EventAveshRouter.get("/all", async (req, res) => {
     });
   } catch (err) {
     console.log("Error in getting all avesh category in backend:", err);
+  }
+});
+EventAveshRouter.get("/get/:id", async (req, res) => {
+  try {
+    await EventAveshCategoryModal.findById(req.params.id)
+      .then((singleAveshCategory) => {
+        res.json({ status: "ok", singleAveshCategory });
+      })
+      .catch((err) =>
+        console.log(
+          "Error in getting single avesh category in backend by Id2 :",
+          err
+        )
+      );
+  } catch (error) {
+    console.log(
+      "Error in getting single avesh category in backend by Id1 :",
+      error
+    );
+  }
+});
+
+EventAveshRouter.put("/update/:id", async (req, res) => {
+  try {
+    const { title, image, description } = req.body;
+    const updateEventAvesh = await EventAveshCategoryModal.findByIdAndUpdate(
+      req.params.id,
+      {
+        AveshEvent: { title, image, description },
+      },
+      {
+        timestamps: true,
+      },
+      {
+        new: true,
+      }
+    );
+    if (!updateEventAvesh) {
+      res.status(404).json({ message: "Not Found" });
+    } else {
+      res.json({
+        status: "ok",
+        message: "Event Avesh Updated Successfull :)",
+        updateEventAvesh: updateEventAvesh,
+      });
+    }
+  } catch (error) {
+    console.log("Error in updating Event Avesh: ", error);
   }
 });
 module.exports = EventAveshRouter;

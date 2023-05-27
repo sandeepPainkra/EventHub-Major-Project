@@ -14,6 +14,8 @@ import * as ImagePicker from "expo-image-picker";
 import { storage } from "../../firebase.config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { getAveshCategoryId } from "../../redux/actions";
 
 const EventCategoriesForAvesh = (props) => {
   const item = props.item;
@@ -25,6 +27,7 @@ const EventCategoriesForAvesh = (props) => {
   const [isActive, setIsActive] = useState(false);
   const [AveshCategoryData, setAveshCategoryData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const SelectImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -98,7 +101,6 @@ const EventCategoriesForAvesh = (props) => {
   };
 
   // Getting all the Event categories of Avesh from database
-
   useEffect(() => {
     fetch("http://10.0.2.2:5000/api/post/v2/avesh-post/all", {
       method: "GET",
@@ -119,6 +121,12 @@ const EventCategoriesForAvesh = (props) => {
       });
   }, [loading === true]);
   // console.log("data is :", AveshCategoryData);
+
+  const HandelNavigate = (id) => {
+    // console.log("id is ", id);
+    navigation.navigate("Avesh Events");
+    dispatch(getAveshCategoryId(id));
+  };
   return (
     <View className="flex-1 h-full bg-[#1F1F39] px-2">
       <View className="flex-row justify-between items-center px-3">
@@ -222,7 +230,12 @@ const EventCategoriesForAvesh = (props) => {
         </TouchableOpacity>
         {AveshCategoryData?.map((item, index) => {
           return (
-            <TouchableOpacity key={index}>
+            <TouchableOpacity
+              onPress={() => {
+                HandelNavigate(item._id);
+              }}
+              key={index}
+            >
               <View className="w-[50%] pb-3 border-2 border-slate-600 my-5 rounded-lg relative left-16 ml-4">
                 <Image
                   className="w-[100%] h-[150px] items-stretch"

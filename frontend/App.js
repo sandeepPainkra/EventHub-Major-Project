@@ -21,6 +21,7 @@ import ParticipatedEvents from "./screens/Extra-screens/ParticipatedEvents.js";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import store from "./redux/store.js";
 import { getUserProfile } from "./redux/actions.js";
+import Avesh_Event_details from "./screens/Extra-screens/Avesh_Event_details.js";
 
 // root Component here
 const RootComponent = () => {
@@ -143,6 +144,22 @@ const RootComponent = () => {
               headerTitle: "All Participated Events",
               headerStyle: {
                 backgroundColor: "#1F1F39",
+              },
+              headerTintColor: "white",
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontSize: 24,
+                fontWeight: "100",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Avesh Events"
+            component={Avesh_Event_details}
+            options={{
+              headerTitle: "Avesh Events",
+              headerStyle: {
+                backgroundColor: "#2F2F42",
               },
               headerTintColor: "white",
               headerTitleAlign: "center",
