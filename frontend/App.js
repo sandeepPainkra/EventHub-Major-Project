@@ -21,7 +21,10 @@ import ParticipatedEvents from "./screens/Extra-screens/ParticipatedEvents.js";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import store from "./redux/store.js";
 import { getUserProfile } from "./redux/actions.js";
-import Avesh_Event_details from "./screens/Extra-screens/Avesh_Event_details.js";
+import Avesh_Event_Details_brief from "./screens/Extra-screens/Avesh_Event_Details_brief.js";
+
+import Avesh_Events from "./screens/Extra-screens/Avesh_Events.js";
+import Form_AveshEvent from "./screens/Extra-screens/Form_AveshEvent.js";
 
 // root Component here
 const RootComponent = () => {
@@ -155,7 +158,7 @@ const RootComponent = () => {
           />
           <Stack.Screen
             name="Avesh Events"
-            component={Avesh_Event_details}
+            component={Avesh_Events}
             options={{
               headerTitle: "Avesh Events",
               headerStyle: {
@@ -166,6 +169,36 @@ const RootComponent = () => {
               headerTitleStyle: {
                 fontSize: 24,
                 fontWeight: "100",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Avesh Events Details in Brief"
+            component={Avesh_Event_Details_brief}
+            options={{
+              headerTitle: "Event Details",
+              headerStyle: {
+                backgroundColor: "#2F2F42",
+              },
+              headerTintColor: "white",
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontSize: 22,
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Form_AveshEvent"
+            component={Form_AveshEvent}
+            options={{
+              headerTitle: "Create Event",
+              headerStyle: {
+                backgroundColor: "#2F2F42",
+              },
+              headerTintColor: "white",
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontSize: 22,
               },
             }}
           />

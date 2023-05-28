@@ -41,6 +41,7 @@ EventAveshRouter.get("/get/:id", async (req, res) => {
     await EventAveshCategoryModal.findById(req.params.id)
       .then((singleAveshCategory) => {
         res.json({ status: "ok", singleAveshCategory });
+        // console.log(singleAveshCategory.title);
       })
       .catch((err) =>
         console.log(
@@ -58,19 +59,37 @@ EventAveshRouter.get("/get/:id", async (req, res) => {
 
 EventAveshRouter.put("/update/:id", async (req, res) => {
   try {
-    const { title, image, description } = req.body;
+    const {
+      title,
+      image,
+      description,
+      startingDate,
+      closingDate,
+      status,
+      CoordinatorName,
+      CoordinatorNumber,
+      place,
+      Id,
+    } = req.body;
     const updateEventAvesh = await EventAveshCategoryModal.findByIdAndUpdate(
       req.params.id,
       {
-        AveshEvent: { title, image, description },
-      },
-      {
-        timestamps: true,
-      },
-      {
-        new: true,
+        $push: {
+          AveshEvent: {
+            title,
+            image,
+            description,
+            status,
+            startingDate,
+            closingDate,
+            CoordinatorName,
+            CoordinatorNumber,
+            place,
+          },
+        },
       }
     );
+
     if (!updateEventAvesh) {
       res.status(404).json({ message: "Not Found" });
     } else {
