@@ -32,7 +32,7 @@ const Form_AveshEvent = () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
+      allowsEditing: false,
       aspect: [4, 3],
       quality: 1,
     });
@@ -83,7 +83,7 @@ const Form_AveshEvent = () => {
       CoordinatorName,
       CoordinatorNumber,
     } = input;
-    fetch(`http://10.0.2.2:5000/api/post/v2/avesh-post/update/${Id}`, {
+    fetch(`http://192.168.84.147:5000/api/post/v2/avesh-post/update/${Id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

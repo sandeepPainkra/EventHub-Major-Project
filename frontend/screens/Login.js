@@ -19,7 +19,7 @@ const Login = () => {
   }, []);
 
   const LoginAccount = async () => {
-    fetch("http://10.0.2.2:5000/api/user/login", {
+    fetch("http://192.168.84.147:5000/api/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

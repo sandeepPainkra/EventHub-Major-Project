@@ -27,7 +27,7 @@ const Header = ({ leftIcon, rightIcon, onClickLeftIcon }) => {
   }, []);
   const LogOut = async () => {
     await AsyncStorage.removeItem("token");
-    await fetch("http://10.0.2.2:5000/api/user/logout", {
+    await fetch("http://192.168.84.147:5000/api/user/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

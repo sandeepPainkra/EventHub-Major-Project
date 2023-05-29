@@ -18,13 +18,16 @@ const Avesh_Events = ({ item }) => {
   //   getting Avesh category events data by perticular Id
   useEffect(() => {
     const fetchData = async () => {
-      await fetch(`http://10.0.2.2:5000/api/post/v2/avesh-post/get/${Id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(),
-      })
+      await fetch(
+        `http://192.168.84.147:5000/api/post/v2/avesh-post/get/${Id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (data.status === "ok") {
@@ -69,12 +72,14 @@ const Avesh_Events = ({ item }) => {
               key={index}
               className="border-2 border-blue-900 pb-7 rounded-xl mb-7"
             >
-              <Image
-                className="h-[200px] w-[100%] mb-2 rounded-xl"
-                source={{
-                  uri: item.image,
-                }}
-              />
+              <View className="relative w-[100%] h-[500px]">
+                <Image
+                  className="h-[100%] object-contain mb-2 rounded-xl"
+                  source={{
+                    uri: item.image,
+                  }}
+                />
+              </View>
               <Text className="text-[22px] text-white capitalize text-center">
                 {item.title}
               </Text>

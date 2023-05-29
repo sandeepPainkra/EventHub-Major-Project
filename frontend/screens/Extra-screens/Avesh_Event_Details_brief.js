@@ -11,13 +11,16 @@ const Avesh_Event_Details_brief = (props) => {
   useEffect(() => {
     if (Id) {
       const fetchData = async () => {
-        await fetch(`http://10.0.2.2:5000/api/post/v2/avesh-post/get/${Id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(),
-        })
+        await fetch(
+          `http://192.168.84.147:5000/api/post/v2/avesh-post/get/${Id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(),
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.status === "ok") {
@@ -53,7 +56,7 @@ const Avesh_Event_Details_brief = (props) => {
               ? "https://icons-for-free.com/iconfiles/png/512/gallery+image+landscape+mobile+museum+open+line+icon-1320183049020185924.png"
               : EventDetails[index]?.image,
           }}
-          className="h-[200px] w-full"
+          className="h-[400px] object-contain"
         />
         <View className="px-3 py-4">
           <Text className="text-gray-400 text-[24px] text-center">

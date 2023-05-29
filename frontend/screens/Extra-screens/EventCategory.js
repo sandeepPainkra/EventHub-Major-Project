@@ -75,7 +75,7 @@ const EventCategoriesForAvesh = (props) => {
   };
 
   const HandelUpload = () => {
-    fetch("http://10.0.2.2:5000/api/post/v2/avesh-post/add", {
+    fetch("http://192.168.84.147:5000/api/post/v2/avesh-post/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -102,7 +102,7 @@ const EventCategoriesForAvesh = (props) => {
 
   // Getting all the Event categories of Avesh from database
   useEffect(() => {
-    fetch("http://10.0.2.2:5000/api/post/v2/avesh-post/all", {
+    fetch("http://192.168.84.147:5000/api/post/v2/avesh-post/all", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

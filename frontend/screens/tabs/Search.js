@@ -18,7 +18,7 @@ const Search = ({ navigation }) => {
 
   useEffect(() => {
     if (searchInput) {
-      fetch(`http://10.0.2.2:5000/api/post/events/${searchInput}`, {
+      fetch(`http://192.168.84.147:5000/api/post/events/${searchInput}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

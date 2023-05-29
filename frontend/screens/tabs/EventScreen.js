@@ -69,7 +69,7 @@ const EventScreen = () => {
   };
 
   const HandelUpload = () => {
-    fetch("http://10.0.2.2:5000/api/post/v1/eventcategory/add", {
+    fetch("http://192.168.84.147/api/post/v1/eventcategory/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +94,7 @@ const EventScreen = () => {
 
   // fetch data
   useEffect(() => {
-    fetch("http://10.0.2.2:5000/api/post/v1/eventcategory/all", {
+    fetch("http://192.168.84.147:5000/api/post/v1/eventcategory/all", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

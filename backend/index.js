@@ -22,6 +22,6 @@ app.use("/api/post/v1/eventcategory", EventCategoryRouter);
 app.use("/api/post/v2/avesh-post", EventAveshRouter);
 app.use("/api/post/", SearchRoute);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, "192.168.84.147", () => {
   console.log("Server is listening in port 5000");
 });
