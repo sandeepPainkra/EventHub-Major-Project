@@ -49,7 +49,9 @@ const Avesh_Event_Details_brief = (props) => {
       <View>
         <Image
           source={{
-            uri: EventDetails[index]?.image,
+            uri: !EventDetails[index]?.image
+              ? "https://icons-for-free.com/iconfiles/png/512/gallery+image+landscape+mobile+museum+open+line+icon-1320183049020185924.png"
+              : EventDetails[index]?.image,
           }}
           className="h-[200px] w-full"
         />
