@@ -66,35 +66,13 @@ const Header = ({ leftIcon, rightIcon, onClickLeftIcon }) => {
           EventHub
         </Text>
       </View>
-      <TouchableOpacity
-        onPress={() => {
-          // Logout();
-          setVisiblity(true);
-        }}
-      >
+      <TouchableOpacity>
         <Image
           className="w-[35px] h-[35px] "
           // tintColor="white"
           source={rightIcon}
         />
       </TouchableOpacity>
-      <Modal animationType="slide" transparent={true} visible={visible}>
-        <View className="flex-1 bg-[#0007] justify-center items-center">
-          <View className="bg-[#fff] px-3 min-h-[250px] justify-center items-center py-9 w-[80%] rounded-md">
-            <TouchableOpacity
-              onPress={() => {
-                LogOut();
-                // setVisiblity(false);
-              }}
-              className=" w-[#50%] rounded-xl bg-[#19A7CE] "
-            >
-              <Text className="text-center text-[27px] text-white py-3">
-                Log out
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 };

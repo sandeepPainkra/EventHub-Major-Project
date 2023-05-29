@@ -6,6 +6,7 @@ const router = require("./routes/User");
 const EventCategoryRouter = require("./routes/Event-Category");
 const EventAveshRouter = require("./routes/Event-Avesh-category");
 const SearchRoute = require("./routes/SearchRoute");
+const EventAyamRouter = require("./routes/Event-Ayam-category");
 
 // connection to database
 
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use("/api/user", router);
 app.use("/api/post/v1/eventcategory", EventCategoryRouter);
 app.use("/api/post/v2/avesh-post", EventAveshRouter);
+app.use("/api/post/v2/ayam-post", EventAyamRouter);
 app.use("/api/post/", SearchRoute);
 
 app.listen(process.env.PORT, "192.168.84.147", () => {

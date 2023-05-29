@@ -110,7 +110,7 @@ const EventScreen = () => {
         console.log("Error", err);
       });
   }, []);
-  console.log("All Event Categories data is :", EventCategoriesData);
+  // console.log("All Event Categories data is :", EventCategoriesData);
   return (
     <View className="flex-1 bg-[#1F1F39] pb-10">
       <Header
@@ -150,7 +150,7 @@ const EventScreen = () => {
               <View className="flex-1 justify-center items-center bg-[#2F2F42] ">
                 <View className="w-[90%] bg-[#26264c] px-3 py-4 rounded-xl items-center ">
                   <View>
-                    <Text className="text-[27px] text-gray-400 ">
+                    <Text className="text-[27px] capitalize text-gray-400 ">
                       Create A Event Category
                     </Text>
                     <View>

@@ -1,0 +1,254 @@
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from "react-native";
+import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
+import { storage } from "../../firebase.config";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useSelector } from "react-redux";
+
+const Form_AyamEvent = () => {
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
+  const [pic, setPic] = useState(null);
+  //   const Id = useSelector((state) => state.getAveshCategoryIdReducer);
+  const [input, setInput] = useState({
+    title: "",
+    description: "",
+    status: "",
+    startingDate: "",
+    closingDate: "",
+    CoordinatorName: "",
+    CoordinatorNumber: "",
+    image: "",
+    Registration_Link: "",
+  });
+  const SelectImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const uploadUrl = await uploadImageAsync(result.assets[0].uri);
+      setPic(uploadUrl);
+    }
+  };
+  // console.log("your Avesh pic is : ", pic);
+
+  // upload image to firebase storage
+  const uploadImageAsync = async (uri) => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+
+    try {
+      const storageRef = ref(
+        storage,
+        `Images/Event-Category/Ayam/Events/image-${Date.now()}`
+      );
+      const result = await uploadBytes(storageRef, blob);
+      blob.close();
+      return await getDownloadURL(storageRef);
+    } catch (error) {
+      Alert.alert(`Error : ${error}`);
+    }
+  };
+
+  const CreateAyamEvent = () => {
+    const {
+      title,
+      description,
+      status,
+      startingDate,
+      closingDate,
+      CoordinatorName,
+      CoordinatorNumber,
+      Registration_Link,
+    } = input;
+    fetch("http://192.168.84.147:5000/api/post/v2/ayam-post/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        description,
+        image: pic,
+        description,
+        status,
+        startingDate,
+        closingDate,
+        CoordinatorName,
+        CoordinatorNumber,
+        Registration_Link,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.status === "ok") {
+          Alert.alert(data.message);
+          setLoading(true);
+          setTitle("");
+        }
+      })
+      .catch((err) => {
+        console.log("Error is", err);
+      });
+  };
+
+  return (
+    <ScrollView className="flex-1 bg-[#1F1F39]">
+      <Text className="text-[30px] px-2 font-light text-gray-500">
+        Create Events....
+      </Text>
+      <View className="w-[100%] h-[1px] bg-gray-700 mb-6"></View>
+
+      <View className="px-2 pb-10">
+        <View>
+          <Text className="text-gray-500 text-[20px]">Title for Event</Text>
+          <TextInput
+            onChangeText={(text) => setInput({ ...input, title: text })}
+            className=" mt-1 bg-[#41416c] px-3 py-2 rounded-lg text-[20px] text-white"
+            placeholder="Title"
+          />
+        </View>
+        <View>
+          <Text className="text-gray-500 text-[20px] mt-3">Description</Text>
+          <TextInput
+            onChangeText={(text) => setInput({ ...input, description: text })}
+            value={input.description}
+            className=" mt-1 bg-[#41416c] px-3 py-2 rounded-lg text-[20px] text-white"
+            placeholder="Description"
+          />
+        </View>
+        <View>
+          <Text className="text-gray-500 text-[20px] mt-3">Status</Text>
+          <TextInput
+            onChangeText={(text) => setInput({ ...input, status: text })}
+            value={input.status}
+            className=" mt-1 bg-[#41416c] px-3 py-2 rounded-lg text-[20px] text-white"
+            placeholder="Status:Upcoming/Completed/Running"
+          />
+        </View>
+        <View>
+          <Text className="text-gray-500 text-[20px] mt-3">Starting Date</Text>
+          <TextInput
+            onChangeText={(text) => setInput({ ...input, startingDate: text })}
+            value={input.startingDate}
+            className=" mt-1 bg-[#41416c] px-3 py-2 rounded-lg text-[20px] text-white"
+            placeholder="Date"
+          />
+        </View>
+        <View>
+          <Text className="text-gray-500 text-[20px] mt-3">Closing Date</Text>
+          <TextInput
+            onChangeText={(text) => setInput({ ...input, closingDate: text })}
+            value={input.closingDate}
+            className=" mt-1 bg-[#41416c] px-3 py-2 rounded-lg text-[20px] text-white"
+            placeholder="Date"
+          />
+        </View>
+        <View>
+          <Text className="text-gray-500 text-[20px] mt-3">
+            Coordinator Name
+          </Text>
+          <TextInput
+            onChangeText={(text) =>
+              setInput({ ...input, CoordinatorName: text })
+            }
+            value={input.CoordinatorName}
+            className=" mt-1 bg-[#41416c] px-3 py-2 rounded-lg text-[20px] text-white"
+            placeholder="Name"
+          />
+        </View>
+        <View>
+          <Text className="text-gray-500 text-[20px] mt-3">
+            Coordinator Number:
+          </Text>
+          <TextInput
+            onChangeText={(text) =>
+              setInput({ ...input, CoordinatorNumber: text })
+            }
+            value={input.CoordinatorNumber}
+            className=" mt-1 bg-[#41416c] px-3 py-2 rounded-lg text-[20px] text-white"
+            placeholder="Number"
+          />
+        </View>
+        <View>
+          <Text className="text-gray-500 text-[20px] mt-3">
+            Registeration Link:
+          </Text>
+          <TextInput
+            onChangeText={(text) =>
+              setInput({ ...input, Registration_Link: text })
+            }
+            value={input.Registration_Link}
+            className=" mt-1 bg-[#41416c] px-3 py-2 rounded-lg text-[20px] text-white"
+            placeholder="  Registeration Link"
+          />
+        </View>
+        <View className="flex flex-row justify-between items-center mt-4">
+          <Text className="text-gray-500 text-[20px]">
+            Select Image for Event:
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              SelectImage();
+            }}
+            className="bg-gray-600 px-3 py-2 flex-row justify-between items-center mr-4"
+          >
+            <Text className="text-white text-[18px]">Select Image</Text>
+            {pic ? (
+              <Image
+                source={require("../../assets/icons/check-mark.png")}
+                className="w-[20px] h-[20px] ml-2"
+              />
+            ) : null}
+          </TouchableOpacity>
+        </View>
+
+        <View className="flex-row justify-center items-center">
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("EventCategory");
+            }}
+            className=" bg-red-600 px-3 py-2 rounded-lg mt-4"
+          >
+            <Text className="text-white text-[20px]">Cancel</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              CreateAyamEvent();
+            }}
+            className="ml-10 bg-[#216bda] px-3 py-2 rounded-lg mt-4"
+          >
+            <Text className="text-white text-[20px]">Create Event</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+export default Form_AyamEvent;
