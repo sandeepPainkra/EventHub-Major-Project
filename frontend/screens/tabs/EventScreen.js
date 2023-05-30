@@ -13,6 +13,7 @@ import Header from "../../common/Header";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { storage } from "../../firebase.config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
@@ -22,12 +23,15 @@ const EventScreen = () => {
   const navigation = useNavigation();
   const [pic, setPic] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const userData = useSelector((state) => state.userReducer);
+  const [loading, setLoading] = useState(false);
 
+  console.log("user data from redux 1", userData);
   const SelectImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
+      allowsEditing: false,
       aspect: [4, 3],
       quality: 1,
     });
@@ -69,7 +73,7 @@ const EventScreen = () => {
   };
 
   const HandelUpload = () => {
-    fetch("http://192.168.84.147/api/post/v1/eventcategory/add", {
+    fetch("http://192.168.84.147:5000/api/post/v1/eventcategory/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -85,6 +89,7 @@ const EventScreen = () => {
           setModalVisible(!modalVisible);
           setTitle("");
           Alert.alert(data.message);
+          setLoading(true);
         }
       })
       .catch((err) => {
@@ -109,8 +114,37 @@ const EventScreen = () => {
       .catch((err) => {
         console.log("Error", err);
       });
-  }, []);
+  }, [loading === true]);
   // console.log("All Event Categories data is :", EventCategoriesData);
+
+  const DeleteEventCategory = (id) => {
+    if (id) {
+      console.log(id);
+      fetch(
+        `http://192.168.84.147:5000/api/post/v1/eventcategory/delete/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((res) => {
+          res.json().then((data) => {
+            console.log(data);
+            if (data?.status === "ok") {
+              Alert.alert(data.message);
+              setLoading(true);
+            }
+          });
+        })
+        .catch((err) => {
+          console.log("Error", err);
+        });
+    } else {
+      console.log("Id is not found");
+    }
+  };
   return (
     <View className="flex-1 bg-[#1F1F39] pb-10">
       <Header
@@ -126,17 +160,19 @@ const EventScreen = () => {
             <Text className="text-white text-[25px] font-light">
               All Event Programs
             </Text>
-            <TouchableOpacity
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <Image
-                style={{ tintColor: "white" }}
-                className="w-[30px] h-[30px]"
-                source={require("../../assets/addition.png")}
-              />
-            </TouchableOpacity>
+            {userData.admin == true ? (
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Image
+                  style={{ tintColor: "white" }}
+                  className="w-[30px] h-[30px]"
+                  source={require("../../assets/addition.png")}
+                />
+              </TouchableOpacity>
+            ) : null}
           </View>
           <View className="w-[80%] h-[3px] bg-[#2F2F42] mt-2"></View>
 
@@ -270,7 +306,7 @@ const EventScreen = () => {
                   });
                 }}
                 key={index}
-                className="relative w-[45%] h-[100px] justify-center item-center mt-8 rounded-[20px]"
+                className="relative w-[45%] h-[100px] border-2 border-slate-400 justify-center item-center mt-8 rounded-[20px]"
               >
                 <Text className="text-center z-20 text-[20px] tracking-[2px] text-white">
                   {item.title}
@@ -279,6 +315,22 @@ const EventScreen = () => {
                   className="w-[100%] absolute h-full top-0 bottom-0 rounded-[20px]"
                   source={{ uri: item.image }}
                 />
+                {userData.admin === true ? (
+                  <TouchableOpacity
+                    onPress={() => {
+                      DeleteEventCategory(item._id);
+                    }}
+                    className="w-[30px] absolute right-[-10px] top-0 rounded-full h-[30px] bg-red-500"
+                  >
+                    <View className="flex justify-center items-center  rounded-full">
+                      <Image
+                        style={{ tintColor: "#fff" }}
+                        className="w-[15px] h-[15px] absolute top-2 "
+                        source={require("../../assets/icons/delete.png")}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                ) : null}
               </TouchableOpacity>
             );
           })}

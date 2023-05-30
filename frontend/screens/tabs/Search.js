@@ -12,7 +12,8 @@ import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const Search = ({ navigation }) => {
+const Search = () => {
+  const navigation = useNavigation();
   const [searchInput, setSearchInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -55,7 +56,12 @@ const Search = ({ navigation }) => {
           className="flex-1 text-[19px] text-gray-500 px-8 py-2 bg-[#1F1F39] rounded-[20px] mx-2"
           placeholder="Cultural,Technical.."
         />
-        <TouchableOpacity onPress={() => setSearchInput("")}>
+        <TouchableOpacity
+          onPress={() => {
+            setSearchInput("");
+            setSearchResults([]);
+          }}
+        >
           <View className="w-[30px] h-[40px] justify-center items-center relative right-2">
             <Entypo name="cross" size={36} color="white" />
           </View>
@@ -74,11 +80,20 @@ const Search = ({ navigation }) => {
             <Text className="text-[25px] text-gray-500">No Results Found</Text>
           )}
           {searchResults.map((event, index) => {
+            console.log("Event data is", event);
             return (
               <View key={index}>
                 {event.AveshEvent.map((event, index) => {
                   return (
-                    <TouchableOpacity key={index} className="my-3">
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate("Avesh Events Details in Brief", {
+                          event,
+                        });
+                      }}
+                      key={index}
+                      className="my-3"
+                    >
                       <View className="w-full flex-row justify-start items-start ">
                         <View className="mr-4">
                           <Image

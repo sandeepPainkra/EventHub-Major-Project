@@ -10,6 +10,11 @@ const eventCategorySchema = new mongoose.Schema({
     default:
       "https://media.istockphoto.com/id/899308580/photo/musicians-on-a-stage.jpg?b=1&s=612x612&w=0&k=20&c=NPlP9qpxh5GYQLomji5HBh9DJH1bhuraSy5l0rLw51w=",
   },
+  OtherEvent: [
+    {
+      type: Object,
+    },
+  ],
 });
 const EventCategoryModel = mongoose.model("EventCategory", eventCategorySchema);
 

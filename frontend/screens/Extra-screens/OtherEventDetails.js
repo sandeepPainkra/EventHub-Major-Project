@@ -2,10 +2,11 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-const Avesh_Event_Details_brief = (props) => {
+const OtherEventDetails = (props) => {
   let index = props.route.params.index;
-  let event = props.route.params.event;
-  console.log("event data is in details", event);
+  let _id = props.route.params._id;
+  let item = props.route.params.item;
+  console.log("first data is here: ", item);
   const Id = useSelector((state) => state.getAveshCategoryIdReducer);
   const [EventDetails, setEventDetails] = useState([]);
 
@@ -49,41 +50,39 @@ const Avesh_Event_Details_brief = (props) => {
   }, [Id]);
 
   // console.log("first data is here: ", EventDetails[index]);
-  return EventDetails[index] ? (
+  return (
     <View className="flex-1 bg-[#1F1F39]  border-t-2 border-gray-700">
       <View>
         <Image
           source={{
-            uri: !EventDetails[index]?.image
+            uri: !item.image
               ? "https://icons-for-free.com/iconfiles/png/512/gallery+image+landscape+mobile+museum+open+line+icon-1320183049020185924.png"
-              : EventDetails[index]?.image,
+              : item.image,
           }}
-          className="h-[400px] object-contain"
+          className="h-[350px] object-contain"
         />
         <View className="px-3 py-4">
           <Text className="text-gray-400 text-[24px] text-center">
-            {EventDetails[index]?.title}
+            {item?.title}
           </Text>
           <Text className="text-gray-500 my-4 mt-1 text-[17px] text-center">
-            {EventDetails[index]?.description}
+            {item?.description}
           </Text>
           <View className="flex-row justify-between items-center border-2 border-blue-800 px-2 py-3 rounded-lg">
             <View>
               <Text className="text-gray-400 text-[20px]">Status :</Text>
-              <Text className="text-green-500 text-[17px]">
-                {EventDetails[index]?.status}
-              </Text>
+              <Text className="text-green-500 text-[17px]">{item?.status}</Text>
             </View>
             <View>
               <Text className="text-gray-400 text-[20px]">Starting Date:</Text>
               <Text className="text-green-500 text-[17px]">
-                {EventDetails[index]?.startingDate}
+                {item?.startingDate}
               </Text>
             </View>
             <View>
               <Text className="text-gray-400 text-[20px]">Closing Date:</Text>
               <Text className="text-green-500 text-[17px]">
-                {EventDetails[index]?.closingDate}
+                {item?.closingDate}
               </Text>
             </View>
           </View>
@@ -93,7 +92,7 @@ const Avesh_Event_Details_brief = (props) => {
                 Coordinator Name:
               </Text>
               <Text className="text-gray-600 text-[18px]">
-                {EventDetails[index]?.CoordinatorName}
+                {item?.CoordinatorName}
               </Text>
             </View>
             <View>
@@ -101,72 +100,7 @@ const Avesh_Event_Details_brief = (props) => {
                 Coordinator Number:
               </Text>
               <Text className="text-gray-600 text-[18px]">
-                {EventDetails[index]?.CoordinatorNumber}
-              </Text>
-            </View>
-          </View>
-
-          <TouchableOpacity className="bg-blue-500 justify-center items-center mt-5 rounded-lg">
-            <Text className="text-[22px] text-white py-3 uppercase tracking-[2px]">
-              Register
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
-  ) : (
-    <View className="flex-1 bg-[#1F1F39]  border-t-2 border-gray-700">
-      <View>
-        <Image
-          source={{
-            uri: !event?.image
-              ? "https://icons-for-free.com/iconfiles/png/512/gallery+image+landscape+mobile+museum+open+line+icon-1320183049020185924.png"
-              : event?.image,
-          }}
-          className="h-[400px] object-contain"
-        />
-        <View className="px-3 py-4">
-          <Text className="text-gray-400 text-[24px] text-center">
-            {event?.title}
-          </Text>
-          <Text className="text-gray-500 my-4 mt-1 text-[17px] text-center">
-            {event?.description}
-          </Text>
-          <View className="flex-row justify-between items-center border-2 border-blue-800 px-2 py-3 rounded-lg">
-            <View>
-              <Text className="text-gray-400 text-[20px]">Status :</Text>
-              <Text className="text-green-500 text-[17px]">
-                {event?.status}
-              </Text>
-            </View>
-            <View>
-              <Text className="text-gray-400 text-[20px]">Starting Date:</Text>
-              <Text className="text-green-500 text-[17px]">
-                {event?.startingDate}
-              </Text>
-            </View>
-            <View>
-              <Text className="text-gray-400 text-[20px]">Closing Date:</Text>
-              <Text className="text-green-500 text-[17px]">
-                {event?.closingDate}
-              </Text>
-            </View>
-          </View>
-          <View className="flex-row justify-between items-center  mt-4">
-            <View>
-              <Text className="text-gray-400 text-[20px]">
-                Coordinator Name:
-              </Text>
-              <Text className="text-gray-600 text-[18px]">
-                {event?.CoordinatorName}
-              </Text>
-            </View>
-            <View>
-              <Text className="text-gray-400 text-[20px]">
-                Coordinator Number:
-              </Text>
-              <Text className="text-gray-600 text-[18px]">
-                {event?.CoordinatorNumber}
+                {item?.CoordinatorNumber}
               </Text>
             </View>
           </View>
@@ -182,4 +116,4 @@ const Avesh_Event_Details_brief = (props) => {
   );
 };
 
-export default Avesh_Event_Details_brief;
+export default OtherEventDetails;

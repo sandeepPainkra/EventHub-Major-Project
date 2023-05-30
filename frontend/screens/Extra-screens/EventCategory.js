@@ -16,6 +16,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { getAveshCategoryId } from "../../redux/actions";
+import OtherEvents from "./OtherEvents";
 
 // for Avesh
 const EventCategoriesForAvesh = (props) => {
@@ -502,8 +503,8 @@ const EventCategories_for_Ayam = () => {
 };
 
 // main function
-const EventCategory = ({ route }) => {
-  const { item } = route.params;
+const EventCategory = (props) => {
+  const { item } = props.route.params;
   console.log("Your item is", item);
   return (
     <View>
@@ -513,7 +514,7 @@ const EventCategory = ({ route }) => {
         <EventCategories_for_Ayam />
       ) : (
         <View>
-          <Text>This is nither Avesh nor Ayam</Text>
+          <OtherEvents item={item} />
         </View>
       )}
     </View>

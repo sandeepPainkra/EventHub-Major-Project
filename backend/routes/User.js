@@ -89,7 +89,7 @@ router.post("/login", (req, res) => {
                     console.log("Token update error: ", error);
                   }
 
-                  const { _id, name, email, image } = user;
+                  const { _id, name, email, image, admin } = user;
                   res.json({
                     status: "ok",
                     message: "Login Successfull :)",
@@ -99,6 +99,7 @@ router.post("/login", (req, res) => {
                       email,
                       image,
                       token: user.tokens[user.tokens.length - 1].token,
+                      admin,
                     },
                   });
                 } else {

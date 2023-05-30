@@ -27,6 +27,8 @@ import Avesh_Events from "./screens/Extra-screens/Avesh_Events.js";
 import Form_AveshEvent from "./screens/Extra-screens/Form_AveshEvent.js";
 import Form_AyamEvent from "./screens/Extra-screens/Form_AyamEvent.js";
 import AyamEvent_details from "./screens/Extra-screens/AyamEvent_details.js";
+import Form_OtherEvents from "./screens/Extra-screens/Form_OtherEvents.js";
+import OtherEventDetails from "./screens/Extra-screens/OtherEventDetails.js";
 
 // root Component here
 const RootComponent = () => {
@@ -73,8 +75,9 @@ const RootComponent = () => {
       <NavigationContainer>
         <Stack.Navigator>
           {!token ? (
-            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Slider3" component={Slider3} />
           ) : (
+            // <Stack.Screen name="Login" component={Login} />
             <Stack.Screen
               name="MobileVerification"
               component={MobileVerification}
@@ -110,7 +113,8 @@ const RootComponent = () => {
             }}
           /> */}
           <Stack.Screen name="Slider2" component={Slider2} />
-          <Stack.Screen name="Slider3" component={Slider3} />
+          {/* <Stack.Screen name="Slider3" component={Slider3} /> */}
+          <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="MobileOtp" component={MobileOtp} />
           <Stack.Screen name="Verified" component={Verified} />
@@ -217,8 +221,38 @@ const RootComponent = () => {
             }}
           />
           <Stack.Screen
+            name="Form_OtherEvents"
+            component={Form_OtherEvents}
+            options={{
+              headerTitle: "Create Event",
+              headerStyle: {
+                backgroundColor: "#2F2F42",
+              },
+              headerTintColor: "white",
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontSize: 22,
+              },
+            }}
+          />
+          <Stack.Screen
             name="AyamEvent_details"
             component={AyamEvent_details}
+            options={{
+              headerTitle: "All Details About Event",
+              headerStyle: {
+                backgroundColor: "#2F2F42",
+              },
+              headerTintColor: "white",
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontSize: 22,
+              },
+            }}
+          />
+          <Stack.Screen
+            name="OtherEvent_details"
+            component={OtherEventDetails}
             options={{
               headerTitle: "All Details About Event",
               headerStyle: {

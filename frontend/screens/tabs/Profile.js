@@ -70,7 +70,7 @@ const Profile = () => {
           AsyncStorage.removeItem("token");
           AsyncStorage.removeItem("user");
           Alert.alert(data.message);
-          navigation.navigate("Landing Screen");
+          navigation.navigate("Login");
         } else {
           Alert.alert(data.error);
         }
@@ -338,6 +338,8 @@ const Profile = () => {
           className="mt-3"
           onPress={() => {
             LogOut();
+            // AsyncStorage.removeItem("user");
+            // AsyncStorage.removeItem("token");
           }}
         >
           <View className="bg-[#2F2F42] px-4 py-4  rounded-xl flex-row items-center justify-between ">

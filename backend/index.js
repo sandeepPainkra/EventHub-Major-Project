@@ -27,3 +27,4 @@ app.use("/api/post/", SearchRoute);
 app.listen(process.env.PORT, "192.168.84.147", () => {
   console.log("Server is listening in port 5000");
 });
+//"192.168.84.147",
