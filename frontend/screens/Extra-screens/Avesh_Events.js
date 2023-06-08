@@ -13,6 +13,7 @@ const Avesh_Events = ({ item }) => {
   const [AveshCategoryData, setAveshCategoryData] = useState([]);
   const dispatch = useDispatch();
   const [Index, setIndex] = useState();
+  const userData = useSelector((state) => state.userReducer);
   // console.log("Data is here: ", AveshCategoryData);
   // console.log("Id from Redux is here1: ", Id);
 
@@ -54,17 +55,19 @@ const Avesh_Events = ({ item }) => {
     <View className="flex-1 bg-[#1F1F39]  border-t-2 border-gray-700 px-2">
       <View className="flex-row justify-between items-center px-2 py-4 border-b-2 border-blue-900 mb-7">
         <Text className=" text-gray-400 text-[24px]">All Events...</Text>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Form_AveshEvent");
-          }}
-        >
-          <Image
-            style={{ tintColor: "white" }}
-            className="h-[33px] w-[33px]"
-            source={require("../../assets/addition.png")}
-          />
-        </TouchableOpacity>
+        {userData.admin === true ? (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Form_AveshEvent");
+            }}
+          >
+            <Image
+              style={{ tintColor: "white" }}
+              className="h-[33px] w-[33px]"
+              source={require("../../assets/addition.png")}
+            />
+          </TouchableOpacity>
+        ) : null}
       </View>
       <ScrollView>
         {AveshCategoryData.map((item, index) => {

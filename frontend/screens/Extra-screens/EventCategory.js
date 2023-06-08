@@ -14,7 +14,7 @@ import * as ImagePicker from "expo-image-picker";
 import { storage } from "../../firebase.config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAveshCategoryId } from "../../redux/actions";
 import OtherEvents from "./OtherEvents";
 import { config } from "../../config";
@@ -31,6 +31,7 @@ const EventCategoriesForAvesh = (props) => {
   const [AyamCategoryData, setAyamCategoryData] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const userData = useSelector((state) => state.userReducer);
 
   const SelectImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -136,17 +137,19 @@ const EventCategoriesForAvesh = (props) => {
         <Text className="text-[39px] text-gray-600 font-light ">
           {item.title}
         </Text>
-        <TouchableOpacity
-          onPress={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <Image
-            style={{ tintColor: "white" }}
-            className="w-[30px] h-[30px]"
-            source={require("../../assets/addition.png")}
-          />
-        </TouchableOpacity>
+        {userData.admin === true ? (
+          <TouchableOpacity
+            onPress={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <Image
+              style={{ tintColor: "white" }}
+              className="w-[30px] h-[30px]"
+              source={require("../../assets/addition.png")}
+            />
+          </TouchableOpacity>
+        ) : null}
       </View>
       {/* Create avesh event category modal */}
       <View>
@@ -272,6 +275,7 @@ const EventCategories_for_Ayam = () => {
   const [AyamCategoryData, setAyamCategoryData] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const userData = useSelector((state) => state.userReducer);
 
   const SelectImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -378,17 +382,19 @@ const EventCategories_for_Ayam = () => {
         <Text className="text-[39px] text-gray-600 font-light ">
           {/* {item.title} */}Ayam Events
         </Text>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Form_AyamEvent");
-          }}
-        >
-          <Image
-            style={{ tintColor: "white" }}
-            className="w-[30px] h-[30px]"
-            source={require("../../assets/addition.png")}
-          />
-        </TouchableOpacity>
+        {userData.admin === true ? (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Form_AyamEvent");
+            }}
+          >
+            <Image
+              style={{ tintColor: "white" }}
+              className="w-[30px] h-[30px]"
+              source={require("../../assets/addition.png")}
+            />
+          </TouchableOpacity>
+        ) : null}
       </View>
       {/* Create avesh event category modal */}
       {/* <View>

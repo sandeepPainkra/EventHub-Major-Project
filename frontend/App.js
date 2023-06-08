@@ -78,23 +78,24 @@ const RootComponent = () => {
             <Stack.Screen name="Slider3" component={Slider3} />
           ) : (
             // <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen
-              name="MobileVerification"
-              component={MobileVerification}
-              options={{
-                headerTitle: "Continue With Phone",
-                headerStyle: {
-                  backgroundColor: "#1F1F39",
-                },
-                headerTintColor: "white",
-                headerTitleAlign: "center",
-                headerTitleStyle: {
-                  fontSize: 24,
-                  fontWeight: "100",
-                },
-              }}
-            />
+            <Stack.Screen name="Verified" component={Verified} />
           )}
+          <Stack.Screen
+            name="MobileVerification"
+            component={MobileVerification}
+            options={{
+              headerTitle: "Continue With Phone",
+              headerStyle: {
+                backgroundColor: "#1F1F39",
+              },
+              headerTintColor: "white",
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontSize: 24,
+                fontWeight: "100",
+              },
+            }}
+          />
           <Stack.Screen name="Landing Screen" component={LandingScreen} />
           {/* <Stack.Screen
             name="MobileVerification"
@@ -117,7 +118,6 @@ const RootComponent = () => {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="MobileOtp" component={MobileOtp} />
-          <Stack.Screen name="Verified" component={Verified} />
           <Stack.Screen
             name="Parent"
             component={Parent}

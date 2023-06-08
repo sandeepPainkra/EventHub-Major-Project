@@ -15,6 +15,7 @@ import * as ImagePicker from "expo-image-picker";
 import { storage } from "../../firebase.config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { config } from "../../config";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -25,7 +26,10 @@ const Profile = () => {
   const [bio, setBio] = useState();
   const [userId, setUserId] = useState();
   const [user, setUser] = useState();
+  const [user1, setUser1] = useState([]);
+  const userData = useSelector((state) => state.userReducer);
 
+  console.log("user1 is here:", user1);
   useEffect(() => {
     AsyncStorage.getItem("token").then((value) => {
       if (!value) {
@@ -50,6 +54,7 @@ const Profile = () => {
       } else {
         // console.log("User in header :", value);
         setUserId(JSON.parse(value)._id);
+        setUser1(value);
       }
     });
   }, []);
@@ -184,9 +189,9 @@ const Profile = () => {
             <Image
               // style={{ tintColor: "" }}
               source={
-                !user?.image
+                user?.image === "demo image"
                   ? require("../../assets/icons/user.png")
-                  : { uri: user?.image }
+                  : { uri: userData.image }
               }
               className="w-[150px] h-[150px] rounded-[75px]]"
             />
@@ -203,9 +208,9 @@ const Profile = () => {
         </View>
         {/* bio section starts here */}
         <View className="w-[full ] justify-center items-center">
-          <Text className="text-white text-[27px]">{user?.name}</Text>
-          <Text className="text-white text-[19px] my-2">{user?.email}</Text>
-          <Text className="text-white text-[15px]">{user?.bio}</Text>
+          <Text className="text-white text-[27px]">{userData.name}</Text>
+          <Text className="text-white text-[19px] my-2">{userData.email}</Text>
+          <Text className="text-white text-[15px]">{userData.bio}</Text>
           <TouchableOpacity
             onPress={() => {
               setModalVisible(!modalVisible);
