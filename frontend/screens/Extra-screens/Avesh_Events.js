@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { getAveshEventIndexReducer } from "../../redux/reducer";
 import { getAveshEventIndex } from "../../redux/actions";
 import { set } from "react-native-reanimated";
+import { config } from "../../config";
 
 const Avesh_Events = ({ item }) => {
   const navigation = useNavigation();
@@ -19,7 +20,7 @@ const Avesh_Events = ({ item }) => {
   useEffect(() => {
     const fetchData = async () => {
       await fetch(
-        `http://192.168.84.147:5000/api/post/v2/avesh-post/get/${Id}`,
+        `http://${config.IP_ADDRESS}:5000/api/post/v2/avesh-post/get/${Id}`,
         {
           method: "GET",
           headers: {

@@ -83,23 +83,26 @@ const Form_AveshEvent = () => {
       CoordinatorName,
       CoordinatorNumber,
     } = input;
-    fetch(`http://192.168.84.147:5000/api/post/v2/avesh-post/update/${Id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title,
-        description,
-        status,
-        startingDate,
-        closingDate,
-        CoordinatorName,
-        CoordinatorNumber,
-        image: pic,
-        Id: Id,
-      }),
-    })
+    fetch(
+      `http://${config.IP_ADDRESS}:5000/api/post/v2/avesh-post/update/${Id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          status,
+          startingDate,
+          closingDate,
+          CoordinatorName,
+          CoordinatorNumber,
+          image: pic,
+          Id: Id,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.status == "ok") {

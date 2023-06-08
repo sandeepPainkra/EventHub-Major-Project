@@ -24,7 +24,8 @@ app.use("/api/post/v2/avesh-post", EventAveshRouter);
 app.use("/api/post/v2/ayam-post", EventAyamRouter);
 app.use("/api/post/", SearchRoute);
 
-app.listen(process.env.PORT, "192.168.84.147", () => {
+app.listen(process.env.PORT, process.env.IP_ADDRESS, () => {
   console.log("Server is listening in port 5000");
 });
-//"192.168.84.147",
+//"192.168.198.147",
+// process.env.IP_ADDRESS,

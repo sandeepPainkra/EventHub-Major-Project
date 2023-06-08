@@ -13,6 +13,7 @@ import * as ImagePicker from "expo-image-picker";
 import { storage } from "../../firebase.config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useSelector } from "react-redux";
+import { config } from "../../config";
 
 const Form_AyamEvent = () => {
   const navigation = useNavigation();
@@ -86,7 +87,7 @@ const Form_AyamEvent = () => {
       CoordinatorNumber,
       Registration_Link,
     } = input;
-    fetch("http://192.168.84.147:5000/api/post/v2/ayam-post/add", {
+    fetch(`http://${config.IP_ADDRESS}:5000/api/post/v2/ayam-post/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

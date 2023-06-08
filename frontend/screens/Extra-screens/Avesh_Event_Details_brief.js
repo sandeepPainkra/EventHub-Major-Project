@@ -1,6 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { config } from "../../config";
 
 const Avesh_Event_Details_brief = (props) => {
   let index = props.route.params.index;
@@ -14,7 +15,7 @@ const Avesh_Event_Details_brief = (props) => {
     if (Id) {
       const fetchData = async () => {
         await fetch(
-          `http://192.168.84.147:5000/api/post/v2/avesh-post/get/${Id}`,
+          `http://${config.IP_ADDRESS}:5000/api/post/v2/avesh-post/get/${Id}`,
           {
             method: "GET",
             headers: {

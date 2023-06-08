@@ -14,6 +14,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { config } from "../../config";
 
 const OtherEvents = ({ item }) => {
   const { _id } = item;
@@ -76,13 +77,16 @@ const OtherEvents = ({ item }) => {
   // Getting all the Event categories of Avesh from database
   useEffect(() => {
     if (_id) {
-      fetch(`http://192.168.84.147:5000/api/post/v1/eventcategory/get/${_id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(),
-      })
+      fetch(
+        `http://${config.IP_ADDRESS}:5000/api/post/v1/eventcategory/get/${_id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (data.status === "ok") {

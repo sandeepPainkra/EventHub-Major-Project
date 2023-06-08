@@ -17,6 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { getAveshCategoryId } from "../../redux/actions";
 import OtherEvents from "./OtherEvents";
+import { config } from "../../config";
 
 // for Avesh
 const EventCategoriesForAvesh = (props) => {
@@ -77,7 +78,7 @@ const EventCategoriesForAvesh = (props) => {
   };
 
   const HandelUpload = () => {
-    fetch("http://192.168.84.147:5000/api/post/v2/avesh-post/add", {
+    fetch(`http://${config.IP_ADDRESS}:5000/api/post/v2/avesh-post/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -104,7 +105,7 @@ const EventCategoriesForAvesh = (props) => {
 
   // Getting all the Event categories of Avesh from database
   useEffect(() => {
-    fetch("http://192.168.84.147:5000/api/post/v2/avesh-post/all", {
+    fetch(`http://${config.IP_ADDRESS}:5000/api/post/v2/avesh-post/all`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -318,7 +319,7 @@ const EventCategories_for_Ayam = () => {
   };
 
   const HandelUpload = () => {
-    fetch("http://192.168.84.147:5000/api/post/v2/ayam-post/add", {
+    fetch(`http://${config.IP_ADDRESS}:5000/api/post/v2/ayam-post/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -346,7 +347,7 @@ const EventCategories_for_Ayam = () => {
 
   // Getting all the Event categories of Avesh from database
   useEffect(() => {
-    fetch("http://192.168.84.147:5000/api/post/v2/ayam-post/all", {
+    fetch(`http://${config.IP_ADDRESS}:5000/api/post/v2/ayam-post/all`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

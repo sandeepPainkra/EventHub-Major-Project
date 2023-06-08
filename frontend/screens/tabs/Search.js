@@ -11,6 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { config } from "../../config";
 
 const Search = () => {
   const navigation = useNavigation();
@@ -19,7 +20,7 @@ const Search = () => {
 
   useEffect(() => {
     if (searchInput) {
-      fetch(`http://192.168.84.147:5000/api/post/events/${searchInput}`, {
+      fetch(`http://${config.IP_ADDRESS}:5000/api/post/events/${searchInput}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

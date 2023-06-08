@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TextInput } from "react-native";
 import { TouchableOpacity } from "react-native";
+import { config } from "../config";
 
 const Register = () => {
   const navigation = useNavigation();
@@ -19,7 +20,7 @@ const Register = () => {
   }, []);
 
   const RegisterAccount = async () => {
-    fetch("http://10.0.2.2:5000/api/user/signup", {
+    fetch(`http://${config.IP_ADDRESS}:5000/api/user/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

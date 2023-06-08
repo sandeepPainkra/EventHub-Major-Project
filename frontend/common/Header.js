@@ -6,6 +6,7 @@ import {
   Alert,
   Modal,
 } from "react-native";
+import { config } from "../config";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
@@ -27,7 +28,7 @@ const Header = ({ leftIcon, rightIcon, onClickLeftIcon }) => {
   }, []);
   const LogOut = async () => {
     await AsyncStorage.removeItem("token");
-    await fetch("http://192.168.84.147:5000/api/user/logout", {
+    await fetch(`http://${config.IP_ADDRESS}:5000/api/user/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

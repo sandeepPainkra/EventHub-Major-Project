@@ -14,6 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker";
 import { storage } from "../../firebase.config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { config } from "../../config";
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -56,7 +57,7 @@ const Profile = () => {
 
   const LogOut = async () => {
     await AsyncStorage.removeItem("token");
-    await fetch("http://192.168.84.147:5000/api/user/logout", {
+    await fetch(`http://${config.IP_ADDRESS}:5000/api/user/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +123,7 @@ const Profile = () => {
   };
 
   const UpdateProfile = async () => {
-    await fetch("http://192.168.84.147:5000/api/user/update-profile", {
+    await fetch(`http://${config.IP_ADDRESS}:5000/api/user/update-profile`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -152,7 +153,7 @@ const Profile = () => {
 
   // Getting user data for profile by id
   useEffect(() => {
-    fetch(`http://192.168.84.147:5000/api/user/getuser/${userId}`, {
+    fetch(`http://${config.IP_ADDRESS}:5000/api/user/getuser/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

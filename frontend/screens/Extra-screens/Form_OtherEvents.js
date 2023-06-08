@@ -13,6 +13,7 @@ import * as ImagePicker from "expo-image-picker";
 import { storage } from "../../firebase.config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useSelector } from "react-redux";
+import { config } from "../../config";
 
 const Form_OtherEvents = (props) => {
   const _id = props.route.params._id;
@@ -92,7 +93,7 @@ const Form_OtherEvents = (props) => {
     try {
       if (_id) {
         const response = await fetch(
-          `http://192.168.84.147:5000/api/post/v1/eventcategory/update/${_id}`,
+          `http://${config.IP_ADDRESS}:5000/api/post/v1/eventcategory/update/${_id}`,
           {
             method: "PUT",
             headers: {

@@ -7,6 +7,7 @@ import {
   Linking,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { config } from "../../config";
 
 const AyamEvent_details = (props) => {
   let Id = props.route.params.id;
@@ -17,7 +18,7 @@ const AyamEvent_details = (props) => {
     if (Id) {
       const fetchData = async () => {
         await fetch(
-          `http://192.168.84.147:5000/api/post/v2/ayam-post/get/${Id}`,
+          `http://${config.IP_ADDRESS}:5000/api/post/v2/ayam-post/get/${Id}`,
           {
             method: "GET",
             headers: {

@@ -16,6 +16,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { storage } from "../../firebase.config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { config } from "../../config";
 
 const EventScreen = () => {
   const [EventCategoriesData, setEventCategoriesData] = useState([]);
@@ -41,7 +42,7 @@ const EventScreen = () => {
       setPic(uploadUrl);
     }
   };
-  // console.log(pic);
+  console.log("This is pic that is returned", pic);
 
   // upload image to firebase storage
   const uploadImageAsync = async (uri) => {
@@ -72,8 +73,32 @@ const EventScreen = () => {
     }
   };
 
+  // fetch data
+
+  useEffect(() => {
+    fetch(`http://${config.IP_ADDRESS}:5000/api/post/v1/eventcategory/all`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(),
+    })
+      .then((res) => {
+        res.json().then((data) => {
+          setEventCategoriesData(data.eventCategory);
+        });
+      })
+      .catch((err) => {
+        console.log("Error is", err);
+      });
+  }, [loading === true]);
+
+  console.log("All Event Categories data is :", EventCategoriesData);
+
+  // Create data
+
   const HandelUpload = () => {
-    fetch("http://192.168.84.147:5000/api/post/v1/eventcategory/add", {
+    fetch(`http://${config.IP_ADDRESS}:5000/api/post/v1/eventcategory/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -88,8 +113,8 @@ const EventScreen = () => {
         if (data?.status === "ok") {
           setModalVisible(!modalVisible);
           setTitle("");
-          Alert.alert(data.message);
           setLoading(true);
+          Alert.alert(data.message);
         }
       })
       .catch((err) => {
@@ -97,31 +122,11 @@ const EventScreen = () => {
       });
   };
 
-  // fetch data
-  useEffect(() => {
-    fetch("http://192.168.84.147:5000/api/post/v1/eventcategory/all", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(),
-    })
-      .then((res) => {
-        res.json().then((data) => {
-          setEventCategoriesData(data.eventCategory);
-        });
-      })
-      .catch((err) => {
-        console.log("Error", err);
-      });
-  }, [loading === true]);
-  // console.log("All Event Categories data is :", EventCategoriesData);
-
   const DeleteEventCategory = (id) => {
     if (id) {
       console.log(id);
       fetch(
-        `http://192.168.84.147:5000/api/post/v1/eventcategory/delete/${id}`,
+        `http://${config.IP_ADDRESS}:5000/api/post/v1/eventcategory/delete/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -133,8 +138,8 @@ const EventScreen = () => {
           res.json().then((data) => {
             console.log(data);
             if (data?.status === "ok") {
-              Alert.alert(data.message);
               setLoading(true);
+              Alert.alert(data.message);
             }
           });
         })
@@ -242,34 +247,7 @@ const EventScreen = () => {
           {/* create Event category Model ends*/}
         </View>
         <View className="w-full h-auto px-6 flex-row flex-wrap justify-between">
-          <TouchableOpacity className="relative w-[45%] h-[100px] justify-center item-center ">
-            <Text className="text-center z-20 text-[20px] tracking-[2px]">
-              Cultural
-            </Text>
-            <Image
-              className="w-[100%] absolute h-full top-0 bottom-0 rounded-[20px]"
-              source={require("../../assets/cultural.jpg")}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity className="relative w-[45%] h-[100px] justify-center item-center">
-            <Text className="text-center z-20 text-[20px] tracking-[2px] text-white">
-              Technical
-            </Text>
-            <Image
-              className="w-[100%] absolute h-full top-0 bottom-0 rounded-[20px]"
-              source={require("../../assets/technical.jpg")}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity className="relative w-[45%] h-[100px] justify-center item-center mt-8 rounded-[20px]">
-            <Text className="text-center z-20 text-[20px] tracking-[2px] text-white">
-              Informal
-            </Text>
-            <Image
-              className="w-[100%] absolute h-full top-0 bottom-0 rounded-[20px]"
-              source={require("../../assets/informal.jpg")}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity className="relative w-[45%] h-[100px] justify-center item-center mt-8 rounded-[20px]">
+          <TouchableOpacity className="relative w-[45%] h-[100px] justify-center item-center mt-2 rounded-[20px]">
             <Text className="text-center z-20 text-[20px] tracking-[2px] text-white">
               Educational
             </Text>
@@ -278,7 +256,7 @@ const EventScreen = () => {
               source={require("../../assets/educational.jpg")}
             />
           </TouchableOpacity>
-          <TouchableOpacity className="relative w-[45%] h-[100px] justify-center item-center mt-8 rounded-[20px]">
+          <TouchableOpacity className="relative w-[45%] h-[100px] justify-center item-center mt-2 rounded-[20px]">
             <Text className="text-center z-20 text-[20px] tracking-[2px] text-gray-900 font-medium">
               Placement
             </Text>
@@ -287,17 +265,9 @@ const EventScreen = () => {
               source={require("../../assets/placement.jpg")}
             />
           </TouchableOpacity>
-          <TouchableOpacity className="relative w-[45%] h-[100px] justify-center item-center mt-8 rounded-[20px]">
-            <Text className="text-center z-20 text-[20px] tracking-[2px] text-white">
-              Alumni Talk
-            </Text>
-            <Image
-              className="w-[100%] absolute h-full top-0 bottom-0 rounded-[20px]"
-              source={require("../../assets/alumni.jpg")}
-            />
-          </TouchableOpacity>
 
           {EventCategoriesData.map((item, index) => {
+            // console.log("image is ", item.image);
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -309,16 +279,16 @@ const EventScreen = () => {
                 className="relative w-[45%] h-[100px] border-2 border-slate-400 justify-center item-center mt-8 rounded-[20px]"
               >
                 <Text className="text-center z-20 text-[20px] tracking-[2px] text-white">
-                  {item.title}
+                  {item?.title}
                 </Text>
                 <Image
                   className="w-[100%] absolute h-full top-0 bottom-0 rounded-[20px]"
-                  source={{ uri: item.image }}
+                  source={{ uri: item?.image }}
                 />
                 {userData.admin === true ? (
                   <TouchableOpacity
                     onPress={() => {
-                      DeleteEventCategory(item._id);
+                      DeleteEventCategory(item?._id);
                     }}
                     className="w-[30px] absolute right-[-10px] top-0 rounded-full h-[30px] bg-red-500"
                   >
